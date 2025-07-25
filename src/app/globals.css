@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "daisyui";
 
 :root {
   --background: #ffffff;
@@ -24,3 +25,16 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@font-face {
+  font-family: 'Abandon';
+  src: url('/fonts/ABANDON.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.titulo-personalizado {
+  font-family: 'Abandon', sans-serif;
+}
+
+
