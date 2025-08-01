@@ -32,7 +32,7 @@ export default function Inicial() {
               playsInline
               className="absolute inset-0 w-full h-full object-cover z-0"
             >
-              <source src="/videos/fondo.mp4" type="video/mp4" />
+              <source src="/videos/bg-video.webm" type="video/webm" />
             </video>
           </div>
           <div className="hero-content flex-col lg:flex-row rounded-lg shadow-2xl">
