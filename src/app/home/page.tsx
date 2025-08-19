@@ -1,15 +1,18 @@
 "use client";
 import Image from "next/image";
-import Footer from "../componetes/footer/footer";
-import Hero from "../componetes/hero/hero";
 import React, { useState,useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+
 import Lux from "../componetes/lux/page";
 import Nexo from "../componetes/nexo/page";
 import Vox from "../componetes/vox/page";
-import { motion, AnimatePresence } from "framer-motion";
+import AboutMe from "../componetes/aboutMe/aboutMe";
+import Footer from "../componetes/footer/footer";
+import Hero from "../componetes/hero/hero";
 
 export default function Home(){
+    //const [showModal, setShowModal] = useState(false);
     const [activeSection, setActiveSection] = useState<"lux" | "nexo" | "vox" | "hero" | null>(null);
     const router = useRouter();
     
@@ -19,10 +22,6 @@ export default function Home(){
     setActiveSection("hero");
     }, []);
     
-    const handleModal = () => {
-        //setShowModal(true);
-        alert("Modal functionality is not implemented yet.");
-    }
     
     return (
          <motion.div
@@ -60,15 +59,15 @@ export default function Home(){
                     <ul
                         tabIndex={0}
                         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 mr-10 shadow">
-                        <li><a><button onClick={() => router.push("/contacto")}>Contacto</button></a></li>
-                        <li><a><button onClick={() => router.push("/galeria")}>Galeria</button></a></li>
-                        <li><a><button onClick={handleModal}>Sobre Mi</button></a></li>
                         <div className="lg:hidden">
                             <li><button onClick={() => setActiveSection("vox")}>VOX</button></li>
                             <li><button onClick={() => setActiveSection("nexo")}>NEXO</button></li>
                             <li><button onClick={() => setActiveSection("lux")}>LUX</button></li>
                         </div>
-                        
+                        <li><a><button onClick={() => router.push("/contacto")}>Contacto</button></a></li>
+                        <li><a><button onClick={() => router.push("/galeria")}>Galeria</button></a></li>
+                        {/*<li><a><label htmlFor="my_modal_6">Sobre Mi</label></a></li>*/}
+
                     </ul>
                     </div>
                 </div>
@@ -122,11 +121,26 @@ export default function Home(){
                         </motion.div>
                         )}
                     </AnimatePresence>
+                    <div>
+                        <AboutMe />
+                    </div>
                 </div>
                 {/* FOOTER */}
                 </div>
                     <Footer/>
                 </div>
+
+                {/* Modal Sobre Mi 
+                <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+                    <div className="modal" role="dialog">
+                    <div className="modal-box">
+                        <AboutMe />
+                        <div className="modal-action">
+                        <label htmlFor="my_modal_6" className="btn">Close!</label>
+                        </div>
+                    </div>
+                </div> */}
         </motion.div>
+        
     );
 }
