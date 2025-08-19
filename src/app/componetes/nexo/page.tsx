@@ -3,10 +3,14 @@ export default function Lux(){
      return (
       <section className="relative min-h-screen bg-black text-white px-6 py-12 overflow-hidden">
         {/* Fondo con fade-in */}
-        <div
-          className="absolute inset-0 z-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/img/bg-nexo.jpg')" }}
-        />
+            <div>
+              <Image
+                src="https://res.cloudinary.com/ddvc5vscj/image/upload/v1754869722/bg-nexo_i8j24v.jpg"
+                alt="Lux Logo"
+                fill
+                className="absolute inset-0 z-0 bg-cover bg-center"
+              />
+            </div>
 
         {/* Contenido por encima */}
         <div className="relative z-10 mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center border rounded-lg shadow-lg p-8 bg-black/60 backdrop-blur-md">

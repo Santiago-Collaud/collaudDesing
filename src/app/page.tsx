@@ -32,7 +32,7 @@ export default function Inicial() {
               playsInline
               className="absolute inset-0 w-full h-full object-cover z-0"
             >
-              <source src="/videos/bg-video.webm" type="video/webm" />
+              <source src="https://res.cloudinary.com/ddvc5vscj/video/upload/v1754869391/bg-video_lb5ttv.webm" type="video/webm" />
             </video>
           </div>
           <div className="hero-content flex-col lg:flex-row rounded-lg shadow-2xl">
