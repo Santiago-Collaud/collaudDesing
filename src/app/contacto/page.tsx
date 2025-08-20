@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import useMailing from "./hook/useMailing";
 import { Send, Rocket } from "lucide-react"; 
 import { motion, AnimatePresence } from "framer-motion";
-import BtnWsp from "@/app/componetes/btnWsp/btnWsp";
 import Footer from "../componetes/footer/footer";
+import { useRouter } from "next/navigation";
 
 export default function Contacto() {
   const [nombre, setNombre] = useState("");
@@ -15,22 +15,37 @@ export default function Contacto() {
   const [showToast, setShowToast] = useState(false);
   const [toastType, setToastType] = useState<"error" | "success">("success");
 
+  const router = useRouter();
+
   const { sendMail, loading, error, success } = useMailing();
+ 
+    // efecto para manejar éxito
+    useEffect(() => {
+      if (success) {
+        setToastType("success");
+        setShowToast(true);
+
+        // limpiar form
+        setNombre("");
+        setEmail("");
+        setMensaje("");
+
+        // redirigir
+        router.push("/home");
+      }
+    }, [success, router]);
+
+    // efecto para manejar error
+    useEffect(() => {
+      if (error) {
+        setToastType("error");
+        setShowToast(true);
+      }
+    }, [error]);
+
 
   const handleEnviar = async () => {
     await sendMail({ nombre, email, mensaje });
-
-    if (error) {
-      setToastType("error");
-      setShowToast(true);
-    } else if (success) {
-      setToastType("success");
-      setShowToast(true);
-      // Limpiar formulario solo si el envío fue exitoso
-      setNombre("");
-      setEmail("");
-      setMensaje("");
-    }
   };
 
   useEffect(() => {
@@ -54,9 +69,10 @@ export default function Contacto() {
           <h1 className="text-4xl md:text-5xl font-mono mb-4 tracking-tight text-white">
             Comenzamos a hablar?
           </h1>
+          <p>Este es el momento de hacer realidad tus ideas </p>
 
           {/* Formulario */}
-          <div className="mb-4">
+          <div className="mb-4 mt-4">
             <h5 className="mb-2">Nombre</h5>
             <input
               type="text"
@@ -126,10 +142,10 @@ export default function Contacto() {
           </button>
         </div>
       </div>
+      <div className="fixed bottom-4 venter w-full z-50">
+        <Footer />
+      </div>
           
-                
-
-
       {/* Toast flotante */}
       <AnimatePresence>
         {showToast && (

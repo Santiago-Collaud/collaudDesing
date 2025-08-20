@@ -4,9 +4,9 @@ import nodemailer from 'nodemailer';
 export async function POST(req: Request) {
   try {
     // Extraemos el objeto user y los detalles del pago del cuerpo de la solicitud
-    const { nombre , mail, mensaje} = await req.json();
+    const { nombre , email, mensaje} = await req.json();
 
-    if (!mail || !nombre || !mensaje) {
+    if (!email || !nombre || !mensaje) {
       return new Response(
         JSON.stringify({ error: 'Faltan datos obligatorios para enviar el correo' }),
         { status: 400 }
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     }
     console.log("mail: ",process.env.EMAIL_USER,"pass: ",process.env.EMAIL_PASS)
 
-    console.log('Nombre:',nombre,'mail:',mail, 'mensaje:',mensaje)
+    console.log('Nombre:',nombre,'mail:',email, 'mensaje:',mensaje)
     
     // Configuración del transport de nodemailer 
     const transport = nodemailer.createTransport({
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       subject: 'Mensajes en pagina',
       html: `
         <h2>Nombre: ${nombre}</h2>
-        <h5>Nombre: ${mail}</h2>
+        <h5>Nombre: ${email}</h2>
         <p>contenido: ${mensaje}</p>
       `,
     };

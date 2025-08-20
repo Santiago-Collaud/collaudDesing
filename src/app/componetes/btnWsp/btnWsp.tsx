@@ -20,9 +20,10 @@ const BtnWsp = () => {
                 alt="Whatsapp icon" 
                 width={35} 
                 height={35} 
-                className="bg-green-600 rouded-full p-2 shadow-lg hover:scale-110 transition-transform duration-300"
+                className="rouded-full p-2 shadow-lg hover:scale-110 transition-transform duration-300" 
                 priority 
                 />
+                {/*bg-sky-500 rounded-full p-2 shadow-lg hover:scale-110 transition-transform duration-300 */}
         </button>
     </div>
   );

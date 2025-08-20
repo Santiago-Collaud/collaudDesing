@@ -33,8 +33,12 @@ export default function useMailing() {
 
       await res.json();
       setSuccess(true);
-    } catch (err: any) {
-      setError(err.message || "Error desconocido");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Error desconocido");
+      }
     } finally {
       setLoading(false);
     }
