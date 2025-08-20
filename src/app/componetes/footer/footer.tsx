@@ -1,8 +1,10 @@
 import React from 'react';
+import BtnTelegram from '../btnTlg/btnTelegram';
+import BtnWsp from '../btnWsp/btnWsp';
 
 const Footer: React.FC = () => {
     return (
-        <footer className="footer sm:footer-horizontal text-base-content flex justify-between ">
+        <footer className="footer sm:footer-horizontal text-base-content flex justify-between bg-gray-800 text-white p-4">
             <nav className='mt-4 ml-10'>
                 <p>&copy; {new Date().getFullYear()} santiagocollaud.com.ar Todos los derechos reservados.</p>
             </nav>
@@ -42,7 +44,10 @@ const Footer: React.FC = () => {
                         d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
                     </svg>
                 </a>
+                <a><BtnWsp/></a>
+                <a><BtnTelegram/></a>
                 </div>
+                
             </nav>
         </footer>
     );
