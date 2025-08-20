@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer: React.FC = () => {
     return (
-        <footer className="footer sm:footer-horizontal text-base-content flex justify-between ">
+        <footer className="footer sm:footer-horizontal text-base-content flex justify-between bg-gray-800 text-white p-4">
             <nav className='mt-4 ml-10'>
                 <p>&copy; {new Date().getFullYear()} santiagocollaud.com.ar Todos los derechos reservados.</p>
             </nav>
