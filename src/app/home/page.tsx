@@ -31,19 +31,19 @@ export default function Home(){
             >
         <div>
             <div>
-                <div className="navbar bg-base-100 shadow-sm">
+                <div className="navbar bg-white shadow-sm">
                     <div className="navbar-start">
                         <Image
                             src="/icon/CollaudDesing_Letras.png"
                             alt="Logo"
                             width={300}
                             height={200}
-                            className="rounded-xl bg-gradient-to-b from-gray-300 to-gray-900 p-2"
+                            className="rounded-xl p-2"
                         />
                     </div>
                     
                     <div className="navbar-center hidden lg:flex">
-                        <ul className="menu menu-horizontal px-1">
+                        <ul className="menu menu-horizontal px-1 text-gray-700 font-semibold">
                             <li><button onClick={() => setActiveSection("vox")}>VOX</button></li>
                             <li><button onClick={() => setActiveSection("nexo")}>NEXO</button></li>
                             <li><button onClick={() => setActiveSection("lux")}>LUX</button></li>
@@ -52,13 +52,13 @@ export default function Home(){
 
                     
                 <div className="navbar-end mr-10">
-                     <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+                    <div className="dropdown">
+                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle bg-gradient-to-r from-blue-300 to-sky-300">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /> </svg>
                     </div>
                     <ul
                         tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 mr-10 shadow">
+                        className="menu menu-sm dropdown-content bg-gray-900 rounded-box  shadow">
                         <div className="lg:hidden">
                             <li><button onClick={() => setActiveSection("vox")}>VOX</button></li>
                             <li><button onClick={() => setActiveSection("nexo")}>NEXO</button></li>
@@ -74,7 +74,7 @@ export default function Home(){
                 </div>
                 
                 {/* Contenido dinámico debajo de navbar */}
-                <div className="pl-8 pr-8 min-h-[300px]">
+                <div className="pl-8 pr-8 pt-4 min-h-[300px]">
                     <AnimatePresence mode="wait">
                         {activeSection === "hero" && (
                         <motion.div
@@ -121,7 +121,7 @@ export default function Home(){
                         </motion.div>
                         )}
                     </AnimatePresence>
-                    <div>
+                    <div className="pt-10 pb-8">
                         <AboutMe />
                     </div>
                 </div>

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Collaud Design",
+  title: "Santiago Collaud",
   description: "Transformamos tus ideas en realidad digital",
   icons: {
     icon: "/favicon.png",
