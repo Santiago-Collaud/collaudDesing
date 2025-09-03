@@ -30,8 +30,12 @@ export default function Contacto() {
         setEmail("");
         setMensaje("");
 
-        // redirigir
-        router.push("/home");
+        // delay de 1 segundo antes de redirigir
+        const timer = setTimeout(() => {
+          router.push("/home");
+        }, 1000);
+
+        return () => clearTimeout(timer); // cleanup por las dudas
       }
     }, [success, router]);
 
@@ -56,13 +60,20 @@ export default function Contacto() {
   }, [showToast]);
 
   return (
+    
     <section className="relative min-h-screen bg-black text-white px-6 py-12 overflow-hidden">
-      <Image
-        src="https://res.cloudinary.com/ddvc5vscj/image/upload/v1755632579/pexels-nietjuhart-796602_bkwst1.jpg"
-        alt="Contact"
-        fill
-        className="absolute inset-0 z-0 bg-cover bg-center"
-      />
+      <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <Image
+              src="https://res.cloudinary.com/ddvc5vscj/image/upload/v1755632579/pexels-nietjuhart-796602_bkwst1.jpg"
+              alt="Contact"
+              fill
+              className="absolute inset-0 z-0 bg-cover bg-center"
+            />
+        </motion.div>
 
       <div className="flex justify-center border rounded-lg shadow-lg bg-black/80 backdrop-blur-md pt-4 pb-4 ml-20 mr-20 relative z-10">
         <div className="w-full max-w-lg">
@@ -142,7 +153,7 @@ export default function Contacto() {
           </button>
         </div>
       </div>
-      <div className="fixed bottom-4 venter w-full z-50">
+      <div className="absolute bottom-0 left-0 w-full z-10">
         <Footer />
       </div>
           
