@@ -53,7 +53,7 @@ export default function Galeria() {
                 <h1 className="text-5xl font-bold text-black">Galería</h1>
             </div>
             <div> 
-                {/*<h3 className="text-lg text-red-200 ">Segui Bajando!</h3>/*}
+                {/*<h3 className="text-lg text-red-200 ">Segui Bajando!</h3>*/}
             </div>
           </motion.section>
         )}
