@@ -60,15 +60,15 @@ export default function Galeria() {
       </div>
 
       {/* SECCIÓN DE LUX */}
-      <section className="z-20 min-h-screen bg-gray-100 flex items-center justify-center">
+      <section className="z-20 min-h-screen bg-gray-100 flex items-center justify-center pt-10 pb-10">
           <Lux/>
       </section>
       {/* SECCIÓN DE VOX */}
-      <section className="z-20 min-h-screen bg-gray-100 flex items-center justify-center">
+      <section className="z-20 min-h-screen bg-rose-100 flex items-center justify-center pt-10 pb-10">
             <Vox/>
       </section>
       {/* SECCIÓN DE NEXO */}
-      <section className="z-20 min-h-screen bg-gray-100 flex items-center justify-center">
+      <section className="z-20 min-h-screen bg-sky-100 flex items-center justify-center pt-10 pb-10">
             <Nexo/>
       </section>
     </div>

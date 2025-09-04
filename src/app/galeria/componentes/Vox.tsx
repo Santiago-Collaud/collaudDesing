@@ -12,23 +12,37 @@ export default function Lux() {
         transition={{ duration: 0.8 }}
         className="absolute inset-0 bg-rose-100 z-0"
       />
+      
 
       {/* Contenedor principal: videos a la izquierda, imagen a la derecha */}
       <div className="relative z-10 flex flex-col md:flex-row w-full max-w-6xl gap-8">
+        
         {/* Videos */}
         <div className="flex flex-col gap-6 md:w-1/2">
-          <iframe
-            width="100%"
-            height="200"
-            className="rounded-lg shadow-lg"
-            src="https://www.youtube.com/embed/-qSTJ1Ny6-g"
-            title="YouTube video 1"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          ></iframe>
-
-          <iframe
+        <Image
+            src="/icon/Vox.png"
+            alt="Galería portada"
+            width={400}
+            height={300}
+            className="object-contain rounded-lg shadow-lg md:hidden"
+          />
+          <div>
+            <iframe
+              width="100%"
+              height="200"
+              className="rounded-lg shadow-lg"
+              src="https://www.youtube.com/embed/-qSTJ1Ny6-g"
+              title="YouTube video 1"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
+            <h3 className="text-black">Campo y Liebre - Nicolas Muller</h3>
+            <p className="text-black text-sm font-bold">Realizamos la producción, grabación y post producción de audio y video</p>
+          </div>
+          
+          <div>
+            <iframe
             width="100%"
             height="200"
             className="rounded-lg shadow-lg"
@@ -38,6 +52,10 @@ export default function Lux() {
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           ></iframe>
+            <h3 className="text-black">Marcha de Entre Rios</h3>
+            <p className="text-black text-sm font-bold">Realizamos la grabación en vivo de esta versión, producción y post producción de audio</p>
+          </div>
+          
         </div>
 
         {/* Imagen VOX */}
@@ -47,7 +65,7 @@ export default function Lux() {
             alt="Galería portada"
             width={400}
             height={300}
-            className="object-contain rounded-lg shadow-lg"
+            className="object-contain rounded-lg shadow-lg sm:block hidden"
           />
         </div>
       </div>

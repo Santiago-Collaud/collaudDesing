@@ -35,13 +35,13 @@ export default function Inicial() {
               <source src="https://res.cloudinary.com/ddvc5vscj/video/upload/v1754869391/bg-video_lb5ttv.webm" type="video/webm" />
             </video>
           </div>
-          <div className="hero-content flex-col lg:flex-row rounded-lg shadow-2xl">
+          <div className="hero-content flex-col lg:flex-row rounded-lg shadow-2xl ">
             <Image
               src="/icon/CollaudDesing_2.png"
               alt="Hero Image"
               width={500}
               height={500}
-              className="max-w-sm rounded-xl shadow-2xl pt-4 pb-2 bg-linear-to-t from-gray-600 to-gray-900 p-10
+              className="max-w rounded-xl shadow-2xl pt-4 pb-2 bg-linear-to-t from-gray-600 to-gray-900 p-10
               hover:scale-150 transition-transform duration-600"
             />
             <div>
@@ -52,7 +52,7 @@ export default function Inicial() {
               <div className="flex justify-end mt-4">  
 
                 <motion.button
-                      className="px-6 py-2 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 text-white font-semibold shadow-lg"
+                      className="px-6 py-2 xl:m-2 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 text-white font-semibold shadow-lg"
                       animate={{
                         scale: [1, 1.05, 1],
                         boxShadow: [

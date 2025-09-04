@@ -74,8 +74,7 @@ export default function Contacto() {
               className="absolute inset-0 z-0 bg-cover bg-center"
             />
         </motion.div>
-
-      <div className="flex justify-center border rounded-lg shadow-lg bg-black/80 backdrop-blur-md pt-4 pb-4 ml-20 mr-20 relative z-10">
+      <div className="w-full max-w-lg flex justify-center border rounded-lg shadow-lg bg-black/80 backdrop-blur-md xl:justify-start mt-4 p-8 pb-10 relative z-10">
         <div className="w-full max-w-lg">
           <h1 className="text-4xl md:text-5xl font-mono mb-4 tracking-tight text-white">
             Comenzamos a hablar?
@@ -153,7 +152,8 @@ export default function Contacto() {
           </button>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 w-full z-10">
+
+      <div className="absolute mt-8 botton-0 left-0 w-full z-10">
         <Footer />
       </div>
           
