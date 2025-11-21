@@ -7,6 +7,8 @@ import Lux from "./componentes/Lux";
 import Vox from "./componentes/Vox";
 import Nexo from "./componentes/Nexo";
 
+import NavBar from "../componetes/navbar/nav";
+
 export default function Galeria() {
   const [showGallery, setShowGallery] = useState(false);
   
@@ -58,7 +60,7 @@ export default function Galeria() {
           </motion.section>
         )}
       </div>
-
+<NavBar />
       {/* SECCIÓN DE LUX */}
       <section className="z-20 min-h-screen bg-gray-100 flex items-center justify-center pt-10 pb-10">
           <Lux/>

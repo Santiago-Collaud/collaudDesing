@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        pathname: "/ddvc5vscj/**", // tu carpeta/ID en Cloudinary
+        pathname: "/ddvc5vscj/image/upload/**",
       },
     ],
   },

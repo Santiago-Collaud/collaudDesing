@@ -66,6 +66,7 @@ export default function Home(){
                         </div>
                         <li><a><button onClick={() => router.push("/contacto")}>Contacto</button></a></li>
                         <li><a><button onClick={() => router.push("/galeria")}>Galeria</button></a></li>
+                        <li><a><button onClick={() => router.push("/download")}>Descargas</button></a></li>
                         {/*<li><a><label htmlFor="my_modal_6">Sobre Mi</label></a></li>*/}
 
                     </ul>
