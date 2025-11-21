@@ -6,6 +6,8 @@ import { Send, Rocket } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../componetes/footer/footer";
 import { useRouter } from "next/navigation";
+import NavBar from "../componetes/navbar/nav";
+import { div } from "framer-motion/client";
 
 export default function Contacto() {
   const [nombre, setNombre] = useState("");
@@ -60,8 +62,9 @@ export default function Contacto() {
   }, [showToast]);
 
   return (
-    
-    <section className="relative min-h-screen bg-black text-white px-6 py-12 overflow-hidden">
+    <div> 
+    <NavBar />
+        <section className="relative min-h-screen bg-black text-white px-6 py-12 overflow-hidden">
       <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -174,6 +177,8 @@ export default function Contacto() {
         )}
       </AnimatePresence>
     </section>
+    </div>
+    
   );
 }
 

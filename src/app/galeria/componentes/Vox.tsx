@@ -56,6 +56,21 @@ export default function Lux() {
             <p className="text-black text-sm font-bold">Realizamos la grabación en vivo de esta versión, producción y post producción de audio</p>
           </div>
           
+          <div>
+            <iframe
+            width="100%"
+            height="200"
+            className="rounded-lg shadow-lg"
+            src="https://www.youtube.com/embed/3RlMySKmVbA?si=FtD9csmpwB7PZOqR"
+            title="YouTube video 3"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
+            <h3 className="text-black">Estancia Los Naranjos</h3>
+            <p className="text-black text-sm font-bold">Realizamos la grabación, direccion y post produccion de imagen</p>
+          </div>
+          
         </div>
 
         {/* Imagen VOX */}

@@ -9,7 +9,7 @@ export default function Hero() {
         
         {/* Columna izquierda: textos animados */}
         <div className="flex flex-col justify-center items-start">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 md:mb-4">COLLAUD is</h1>
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 md:mb-4">COLLAUD es</h1>
           <span className="text-pink-400 text-3xl md:text-5xl font-mono mb-4 md:mb-6">
             <Typewriter
               words={["Diseño", "Code", "Audio", "Video", "Marketing", "Imagen", "Web", "App", "UX/UI"]}
