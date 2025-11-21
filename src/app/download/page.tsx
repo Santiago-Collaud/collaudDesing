@@ -50,8 +50,8 @@ export default function DownloadPage() {
         router.push("/clientes");
       }
 
-    } catch (err) {
-      setError("Error al conectar con el servidor");
+    } catch {
+      setError("Error al conectar con el servidor" );
     }
 
     setLoading(false);

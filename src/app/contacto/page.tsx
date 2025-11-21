@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Footer from "../componetes/footer/footer";
 import { useRouter } from "next/navigation";
 import NavBar from "../componetes/navbar/nav";
-import { div } from "framer-motion/client";
+
 
 export default function Contacto() {
   const [nombre, setNombre] = useState("");

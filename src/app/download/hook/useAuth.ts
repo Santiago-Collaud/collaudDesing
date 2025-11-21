@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
  * Decode a JWT payload (base64url) without external dependencies.
  * This is intended to run in the browser (atob available).
  */
-function decodeJwt<T = any>(token: string): T {
+function decodeJwt<T = unknown>(token: string): T {
   const parts = token.split(".");
   if (parts.length < 2) {
     throw new Error("Invalid JWT token");
@@ -16,7 +16,7 @@ function decodeJwt<T = any>(token: string): T {
   try {
     const decoded = atob(padded);
     return JSON.parse(decoded) as T;
-  } catch (err) {
+  } catch {
     throw new Error("Failed to decode JWT payload");
   }
 }

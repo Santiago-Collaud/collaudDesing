@@ -43,7 +43,7 @@ export default function Lux(){
                         <div key={i} className="relative group cursor-pointer overflow-hidden rounded-xl shadow-lg">
 
                        
-                        <img src={item.src} alt={item.title} 
+                        <Image src={item.src} alt={item.title} 
                             className="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500" />
                         <h3 className="absolute text-lg font-bold text-black md:hidden m-2">{item.title}</h3>
                         <p className=" relative text-sm text-black md:hidden pt-8">{item.desc}</p>
