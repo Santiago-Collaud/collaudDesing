@@ -29,7 +29,7 @@ export default function Nexo(){
                             
                     ].map((item, i) => (
                         <div key={i} className="relative group cursor-pointer overflow-hidden rounded-xl shadow-lg">
-                        <Image src={item.src} alt={item.title} 
+                        <img src={item.src} alt={item.title} 
                             className="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500" />
                         <h3 className="absolute text-lg font-bold text-black m-3 md:hidden ">{item.title}</h3>
                         <p className=" relative text-sm text-black md:hidden m-3 pt-15">{item.desc}</p>
