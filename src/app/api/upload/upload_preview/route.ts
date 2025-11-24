@@ -1,34 +1,43 @@
-// /pages/api/upload_preview.ts
-import type { NextApiRequest, NextApiResponse } from "next";
+
+// src/app/api/upload_preview/route.ts
+import { NextResponse } from "next/server";
 import cloudinary from "../../../../../lib/cloudinary";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export async function POST(req: Request) {
   try {
-    if (req.method !== "POST") {
-      return res.status(405).json({ error: "Método no permitido" });
-    }
-
-    const { file } = req.body;
+    // Leer FormData
+    const formData = await req.formData();
+    const file = formData.get("file") as File | null;
 
     if (!file) {
-      return res.status(400).json({ error: "Falta la imagen de preview" });
+      return NextResponse.json(
+        { error: "Falta la imagen de preview" },
+        { status: 400 }
+      );
     }
 
-    const uploadResponse = await cloudinary.uploader.upload(file, {
-      folder: "assets/collaudDesign/preview",
+    // Convertir archivo a Base64 (Cloudinary necesita base64)
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    const base64 = `data:${file.type};base64,${buffer.toString("base64")}`;
+
+    const uploadResponse = await cloudinary.uploader.upload(base64, {
+      folder: "CollaudDesign/preview",
       resource_type: "image",
     });
 
-    return res.status(200).json({
-      url: uploadResponse.secure_url,
-      public_id: uploadResponse.public_id,
-    });
+    return NextResponse.json(
+      {
+        url: uploadResponse.secure_url,
+        public_id: uploadResponse.public_id,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error al subir preview:", error);
-    return res.status(500).json({ error: "Error al subir preview" });
+    return NextResponse.json(
+      { error: "Error al subir preview" },
+      { status: 500 }
+    );
   }
 }
-

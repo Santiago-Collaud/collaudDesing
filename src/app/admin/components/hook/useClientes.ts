@@ -1,14 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-export interface Cliente {
-  id: string;
-  username: string;
-  active: boolean;
-  rol: string;
-  created_at: string;
-}
+import { Cliente } from "@/interface/cliente";
 
 export function useClientes() {
   const [clientes, setClientes] = useState<Cliente[]>([]);

@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import type { Cliente } from "../../admin/components/hook/useClientes";
+import { Cliente } from "@/interface/cliente";
 
 interface Props {
   cliente: Cliente;
@@ -14,11 +14,14 @@ export default function ClienteCard({ cliente }: Props) {
         padding: 16,
         borderRadius: 8,
         marginBottom: 12,
-        background: "#f9f9f9",
+        background: "#1a1a1aff",
+        height: 200,
+        width: 300,
       }}
     >
+      <h2>{cliente.nombre} {cliente.apellido}</h2>
       <h3>{cliente.username}</h3>
-      <p>ID: {cliente.id}</p>
+      {/*<p>ID: {cliente.id}</p>*/}
       <p>
         Estado:{" "}
         <strong style={{ color: cliente.active ? "green" : "red" }}>

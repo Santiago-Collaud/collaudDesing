@@ -1,37 +1,35 @@
-// /pages/api/create_evento.ts
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 import { supabase } from "../../../../../lib/supabaseClient";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-){
-     
+export async function POST(req: Request) {
   try {
-    if (req.method !== "POST") {
-      return res.status(405).json({ error: "Método no permitido" });
-    }
+    const body = await req.json();
 
     const {
-      nombre,
-      descripcion,
+      cliente_id: id_cliente,
+      tituloEvento,
+      comentario,
       preview_url,
       link_supa,
       link_drive,
-      active=true,
-    } = req.body;
+      active = true,
+    } = body;
 
-    if (!nombre || !descripcion || !preview_url) {
-      return res.status(400).json({
-        error: "nombre, descripcion y preview_url son obligatorios",
-      });
+    //console.log(tituloEvento, comentario, preview_url, link_supa, link_drive, active);
+
+    if (!tituloEvento || !comentario || !preview_url) {
+      return NextResponse.json(
+        { error: "tituloEvento, comentario y preview_url son obligatorios" },
+        { status: 400 }
+      );
     }
 
     const { data, error } = await supabase
       .from("eventos")
       .insert({
-        nombre,
-        descripcion,
+        id_cliente,
+        tituloEvento,
+        comentario,
         preview_url,
         link_supa: link_supa || null,
         link_drive: link_drive || null,
@@ -42,9 +40,12 @@ export default async function handler(
 
     if (error) throw error;
 
-    return res.status(200).json({ evento: data });
+    return NextResponse.json({ evento: data }, { status: 200 });
   } catch (error) {
     console.error("Error al crear evento:", error);
-    return res.status(500).json({ error: "Error al crear evento" });
+    return NextResponse.json(
+      { error: "Error al crear evento" },
+      { status: 500 }
+    );
   }
 }

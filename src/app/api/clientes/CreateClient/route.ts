@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 export async function POST(req: Request) {
   try {
-    const {username, pass, active} = await req.json();
+    const {username, pass, active,nombre, apellido, email} = await req.json();
     const rol = 'cliente';
 
     // Verificar que la contraseña no esté vacía
@@ -16,14 +16,16 @@ export async function POST(req: Request) {
       const hashedPass = await bcrypt.hash(pass, saltRounds);
 
     const { data, error } = await supabase
-      .from('usuarios')
+      .from('user')
       .insert([
         {
           username,
-          active,
+          nombre,
+          apellido,
+          email,
           rol,
           pass: hashedPass,
-          activo:'TRUE'
+          active:'TRUE'
         },
       ]);
 
