@@ -54,12 +54,14 @@ export function useAuth() {
   }, []);
 
   const saveToken = (newToken: string) => {
-    localStorage.setItem("token", newToken);
+  localStorage.setItem("token", newToken);
 
-    const decoded = decodeJwt<DecodedToken>(newToken);
-    setToken(newToken);
-    setUser(decoded);
-  };
+  const decoded = decodeJwt<DecodedToken>(newToken);
+  setToken(newToken);
+  setUser(decoded);
+
+  console.log("Token y rol guardados en cookies");
+};
 
   const logout = () => {
     localStorage.removeItem("token");

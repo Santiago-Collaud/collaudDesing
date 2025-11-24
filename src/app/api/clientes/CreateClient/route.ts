@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 export async function POST(req: Request) {
   try {
     const {username, pass, active} = await req.json();
-    const rol="admin";
+    const rol = 'cliente';
 
     // Verificar que la contraseña no esté vacía
     if (!pass) {
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
       const hashedPass = await bcrypt.hash(pass, saltRounds);
 
     const { data, error } = await supabase
-      .from('user')
+      .from('usuarios')
       .insert([
         {
           username,
