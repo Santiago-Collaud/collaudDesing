@@ -1,21 +1,14 @@
-"use client";
+// src/app/admin/components/hook/useUpdateEvento.ts
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { IEventoUpdate } from "@/interface/updateEvento";
 
-interface CreateEventoPayload {
-  tituloEvento: string;
-  comentario?: string;
-  previewFile: File;
-  archivoSupa?: File | null;
-  link_drive?: string | null;
-  cliente_id: string;
-}
-
-export function useCreateEvento() {
-  const router = useRouter();
+export function useUpdateEvento() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
+  // ---- SUBIR PREVIEW ----
   const uploadPreview = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
@@ -31,6 +24,7 @@ export function useCreateEvento() {
     return data.url;
   };
 
+  // ---- SUBIR ARCHIVO SUPA ----
   const uploadSupa = async (file: File | null) => {
     if (!file) return null;
 
@@ -48,51 +42,60 @@ export function useCreateEvento() {
     return data.url;
   };
 
-  const createEvento = async (payload: CreateEventoPayload) => {
+  // ---- UPDATE EVENTO ----
+  const updateEvento = async (payload: IEventoUpdate) => {
     try {
       setLoading(true);
       setError(null);
 
-      // 1) Preview obligatorio
-      const preview_url = await uploadPreview(payload.previewFile);
+      let preview_url = payload.preview_url;
+      let link_supa = payload.link_supa;
 
-      // 2) SUPA opcional
-      const link_supa = await uploadSupa(payload.archivoSupa || null);
+      // 1️⃣ ¿El usuario subió nueva preview?
+      if (payload.newPreviewFile) {
+        preview_url = await uploadPreview(payload.newPreviewFile);
+      }
 
-      // 3) Crear Evento
-      const res = await fetch("/api/evento/create_evento", {
+      // 2️⃣ ¿Subió nuevo archivo supa?
+      if (payload.newSupaFile) {
+        link_supa = await uploadSupa(payload.newSupaFile);
+      }
+
+      // 3️⃣ Enviar update al backend
+      const res = await fetch("/api/evento/updateEvento", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
+          id: payload.id,
           tituloEvento: payload.tituloEvento,
-          comentario: payload.comentario || null,
-          preview_url,
+          comentario: payload.comentario,
+          link_drive: payload.link_drive,
           link_supa,
-          link_drive: payload.link_drive || null,
-          cliente_id: payload.cliente_id,
+          preview_url,
+          active: payload.active,
         }),
       });
 
       if (!res.ok) {
         const err = await res.json();
-        throw new Error(err.error || "Error creando evento");
+        throw new Error(err.error || "Error actualizando evento");
       }
 
-      router.push(`/admin/clientes/${payload.cliente_id}`);
       router.refresh();
+      return true;
 
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      }else{
-        setError(String(err));
-      }
+      setError(err instanceof Error ? err.message : "Error desconocido");
       console.error(err);
+      return false;
+
     } finally {
       setLoading(false);
     }
   };
 
-  return { createEvento, loading, error };
+  return { updateEvento, loading, error };
 }

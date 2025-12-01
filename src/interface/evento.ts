@@ -1,10 +1,11 @@
 export interface Evento {
     id: string;
     tituloEvento: string;
-    comentario: string | null;
-    link_drive: string | null;
-    link_supa: string | null;
+    comentario: string ;
+    link_drive: string ;
+    link_supa: string ;
     preview_url: string;
     active: boolean;
     created_at: string;
+    id_cliente: string;
 }

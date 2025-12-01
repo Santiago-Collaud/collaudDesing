@@ -12,13 +12,15 @@ export default function Page() {
      const router = useRouter();
 
     return (
-        <main style={{ padding: 24, fontFamily: "Inter, sans-serif" }}>
-        <NavBar />
-        <h1>Administrador </h1>
-        <h1>Bienvenido </h1>
-        <LogOut />
-
-        <section style={{ marginTop: 20 }}>
+        <main >
+             <NavBar />
+            <div style={{ padding: 24, fontFamily: "Inter, sans-serif" }}>
+                <h1>Administrador </h1>
+                <h1>Bienvenido </h1>
+                <LogOut />
+            </div>
+       
+        <section style={{ marginTop: 20,padding: 24 }}>
             <h2>Lista de clientes y eventos</h2>
 
             <button
@@ -37,7 +39,6 @@ export default function Page() {
                     <ClienteCard key={cliente.id} cliente={cliente} />
                  ))}
             </div>
-            
         </section>
         </main>
     );  

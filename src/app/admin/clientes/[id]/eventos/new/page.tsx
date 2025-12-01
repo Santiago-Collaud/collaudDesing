@@ -9,7 +9,6 @@ export default function CrearEventoPage() {
   const params = useParams();
   const id = params.id as string;
   
-
   const { createEvento, loading, error } = useCreateEvento();
 
   const [tituloEvento, setTituloEvento] = useState("");

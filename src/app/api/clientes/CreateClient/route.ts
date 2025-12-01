@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 export async function POST(req: Request) {
   try {
-    const {username, pass, active,nombre, apellido, email} = await req.json();
+    const {username, pass, nombre, apellido, email} = await req.json();
     const rol = 'cliente';
 
     // Verificar que la contraseña no esté vacía

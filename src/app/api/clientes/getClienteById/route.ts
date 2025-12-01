@@ -26,6 +26,7 @@ export async function GET(req: Request) {
       const { payload: verified } = await jwtVerify(token, SECRET);
       payload = verified;
     } catch (err) {
+      console.error("Token verification error:", err);
       return new Response(JSON.stringify({ error: "Token inválido" }), {
         status: 401,
       });

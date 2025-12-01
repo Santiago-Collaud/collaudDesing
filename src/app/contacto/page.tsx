@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import useMailing from "./hook/useMailing";
 import { Send, Rocket } from "lucide-react"; 
 import { motion, AnimatePresence } from "framer-motion";
-import Footer from "../componetes/footer/footer";
 import { useRouter } from "next/navigation";
 import NavBar from "../componetes/navbar/nav";
 
@@ -154,10 +153,6 @@ export default function Contacto() {
             </AnimatePresence>
           </button>
         </div>
-      </div>
-
-      <div className="absolute mt-8 botton-0 left-0 w-full z-10">
-        <Footer />
       </div>
           
       {/* Toast flotante */}

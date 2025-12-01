@@ -23,7 +23,7 @@ export function useClientes() {
       const data = await res.json();
       setClientes(data || []);
 
-      console.log("Clients fetched:", data.clientes);
+      //console.log("Clients fetched:", data.clientes);
 
     } catch (err) {
       console.error(err);
