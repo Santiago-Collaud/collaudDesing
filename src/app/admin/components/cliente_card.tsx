@@ -57,64 +57,53 @@ if (ok) {
 
 };
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        padding: 2,
-        borderRadius: 8,
-        marginBottom: 12,
-        background: "#1a1a1aff",
-        height: 200,
-        width: 300,
-      }}
-    >
-      <h2>
-        {cliente.nombre} {cliente.apellido}
-      </h2>
-      <h3>{cliente.username}</h3>
-
-      <p>
-        Estado:{" "}
-        <strong style={{ color: cliente.active ? "green" : "red" }}>
-          {cliente.active ? "Activo" : "Inactivo"}
-        </strong>
-      </p>
-
-      <p>Creado: {new Date(cliente.created_at).toLocaleDateString()}</p>
+    <div className="card bg-base-100 w-96 shadow-sm">
+      <div className="card-body">
+        <div className="border rounded-t-md p-2 mb-2">
+          <h2>cliente</h2>
+          <h2 className="text-center font-bold text-lg">
+            {cliente.nombre} {cliente.apellido}
+          </h2>
+        </div>
+        <div className="border p-2 mb-2">
+          <h2>Nombre de usuario</h2>
+          <h3 className="text-center font-bold text-lg">
+            {cliente.username}
+          </h3>
+        </div>
+        <div className="border p-2 mb-2">
+          <p>
+            Estado: {" "}
+              <strong style={{ color: cliente.active ? "green" : "red" }}>
+                {cliente.active ? "Activo" : "Inactivo"}
+              </strong>
+          </p>
+        </div>
+      
+        <div className="border rounded-b-md p-2 mb-2">
+          <p>Creado: {new Date(cliente.created_at).toLocaleDateString()}</p>
+        </div>
+      </div>
+      
+      
 
       {/* Botón Ver eventos */}
-      <Link href={`/admin/clientes/${cliente.id}`}>
-        <button
-          style={{
-            marginTop: 2,
-            padding: "6px 12px",
-            borderRadius: 6,
-            border: "none",
-            background: "#0070f3",
-            color: "white",
-            cursor: "pointer",
-          }}
-        >
-          Ver eventos
-        </button>
-      </Link>
+      <div className="card-actions justify-end mb-4 px-4">
+        <Link href={`/admin/clientes/${cliente.id}`}>
+          <button className="btn btn-neutral"
+          >
+            Ver eventos
+          </button>
+        </Link>
 
-      {/* Botón Editar */}
-      <button
-        onClick={() => setShowEditModal(true)}
-        style={{
-          display: "block",
-          marginTop: 10,
-          padding: "6px 12px",
-          borderRadius: 6,
-          border: "none",
-          background: "#ffaa00",
-          color: "black",
-          cursor: "pointer",
-        }}
-      >
-        Editar  
-      </button>
+        {/* Botón Editar */}
+        <button
+          onClick={() => setShowEditModal(true)}
+          className="btn btn-neutral"
+        >
+          Editar  
+        </button>
+      </div>
 
       {/* Modal */}
       {showEditModal && (
@@ -137,55 +126,63 @@ if (ok) {
               width: 350,
             }}
           >
-            <h3>Editar cliente</h3>
-
+            <h1 className="border-b text-xl pb-2">Editar cliente</h1>
             <form onSubmit={handleSubmit}>
-            <h3>Nombre</h3>
-              <input
-                name="nombre"
-                value={formData.nombre}
-                onChange={handleChange}
-                placeholder="Nombre"
-                style={{ width: "100%", marginTop: 8 }}
-              />
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Nombre</legend>
+                <input 
+                  type="text" 
+                  className="input" 
+                  name="nombre"
+                  placeholder="Nombre"
+                  value={formData.nombre}
+                  onChange={handleChange} />
+              </fieldset>
 
-              <h3>Apellido</h3>
-              <input
-                name="apellido"
-                value={formData.apellido}
-                onChange={handleChange}
-                placeholder="Apellido"
-                style={{ width: "100%", marginTop: 8 }}
-              />
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Apellido</legend>
+                <input 
+                  type="text" 
+                  className="input" 
+                  name="apellido"
+                  placeholder="Apellido"
+                  value={formData.apellido}
+                  onChange={handleChange} />
+              </fieldset>
+              
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Usuario</legend>
+                <input 
+                  type="text" 
+                  className="input" 
+                  name="usuario"
+                  placeholder="Usuario"
+                 value={formData.username}
+                  onChange={handleChange} />
+              </fieldset>
 
-              <h3>Usuario</h3>
-              <input
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                placeholder="Usuario"
-                style={{ width: "100%", marginTop: 8 }}
-              />
+            <fieldset className="fieldset">
+                <legend className="fieldset-legend">Email</legend>
+                <input 
+                  type="text" 
+                  className="input" 
+                  name="email"
+                  placeholder="Email"
+                 value={formData.email}
+                  onChange={handleChange} />
+              </fieldset>
 
-              <h3>Email</h3>
-              <input
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Email"
-                style={{ width: "100%", marginTop: 8 }}
-              />
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Nueva contraseña (opcional)</legend>
+                <input 
+                  type="password" 
+                  className="input" 
+                  name="pass"
+                  placeholder="Nueva contraseña"
+                  value={formData.pass}
+                  onChange={handleChange} />
+              </fieldset>
 
-              <h3>Nueva contraseña (opcional)</h3>
-              <input
-                name="pass"
-                value={formData.pass}
-                onChange={handleChange}
-                placeholder="Nueva contraseña (opcional)"
-                type="password"
-                style={{ width: "100%", marginTop: 8 }}
-              />
-              <h3>Activo</h3>
               <label style={{ marginTop: 10, display: "block" }}>
                 <input
                   type="checkbox"

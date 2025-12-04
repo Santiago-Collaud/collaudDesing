@@ -41,6 +41,7 @@ export default function CrearEventoPage() {
 
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 12 }}
       className="bg-gray-800 max-w-lg p-6 rounded-lg shadow-md">
+
         <h2>Titulo del evento</h2>
         <input
           type="text"
@@ -50,6 +51,7 @@ export default function CrearEventoPage() {
           required
           className="input input-lg"
         />
+
         <h2>Comentario</h2>
         <textarea
           placeholder="Comentario"
@@ -57,30 +59,35 @@ export default function CrearEventoPage() {
           onChange={(e) => setComentario(e.target.value)}
           className="textarea textarea-neutra"
         />
-        <label>Vista Previa (imagen obligatoria):</label>
-        <input 
-            type="file" 
-            accept="image/*" 
-            onChange={(e) => setPreviewFile(e.target.files?.[0] || null)} 
-            required 
-            className="file-input"/>
-        
-        <h2>Link Drive (opcional)</h2>
-        <input
-          type="text"
-          placeholder="Link Drive (opcional)"
-          value={linkDrive}
-          onChange={(e) => setLinkDrive(e.target.value)}
-          className="input input-lg"
-        />
+        <div className="border rounded-lg m-4 p-2">
+          <label>Vista Previa (imagen obligatoria):</label>
+          <input 
+              type="file" 
+              accept="image/*" 
+              onChange={(e) => setPreviewFile(e.target.files?.[0] || null)} 
+              required 
+              className="file-input "/>
+        </div>
 
+        <div className="border rounded-lg m-4 p-2">
+          <h2>Link Drive (opcional)</h2>
+            <input
+              type="text"
+              placeholder="Link drive (opcional)"
+              value={linkDrive}
+              onChange={(e) => setLinkDrive(e.target.value)}
+              className="border p-2"
+            />
+        </div>
         
+      <div className="border rounded-lg m-4 p-2">
         <h2>Archivo Supa (opcional):</h2>
         <input 
             type="file" 
             onChange={(e) => setArchivoSupa(e.target.files?.[0] || null)} 
-            placeholder="Archivo Supa (opcional)"
-            className="input input-lg"/>
+            className="file-input"/>
+      </div>
+        
 
         <button type="submit" disabled={loading} className="btn btn-primary">
           {loading ? "Creando..." : "Crear evento"}

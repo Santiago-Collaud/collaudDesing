@@ -54,27 +54,19 @@ export default function ClienteEventosPage() {
   return (
     <main >
       <NavBar />
-      <h1>Cliente: {cliente.username}</h1>
+      <h1 className="text-lg mt-4 mb-4 ml-4">Cliente: {cliente.username}</h1>
       <button
                 onClick={() => router.push(`/admin/clientes/${id}/eventos/new`)}
-                style={{
-                  padding: "8px 14px",
-                  background: "green",
-                  color: "white",
-                  borderRadius: 6,
-                  marginBottom: 12,
-                }}
+                className="btn btn-soft btn-success"
               >
                 + Crear evento
             </button>
 
-      <h1>Eventos</h1>
-
       {cliente.eventos.length === 0 && <p>Este cliente no tiene eventos.</p>}
 
-      <div >
+      <div className="grid grid-cols-2 gap-4 border-t pt-4 mt-4">
         {cliente.eventos.map((ev) => (
-                <EventoCard key={ev.id} evento={ev} />
+                <EventoCard key={ev.id} evento={ev}/>
               ))}  
       </div>
     </main>

@@ -1,48 +1,39 @@
-// /pages/api/upload_supa.ts
-import type { NextApiRequest, NextApiResponse } from "next";
 import { supabase } from "../../../../../lib/supabaseClient";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export async function POST(req: Request) {
   try {
-    if (req.method !== "POST") {
-      return res.status(405).json({ error: "Método no permitido" });
+    const formData = await req.formData();
+    const file = formData.get("file") as File;
+
+    if (!file) {
+      return Response.json({ error: "Falta archivo" }, { status: 400 });
     }
 
-    const { file, fileName } = req.body;
+    const buffer = Buffer.from(await file.arrayBuffer());
 
-    if (!file || !fileName) {
-      return res.status(400).json({ error: "Faltan datos" });
-    }
-
-    // file debe venir como base64 o buffer
-    const fileBuffer = Buffer.from(file, "base64");
+    const fileName = `${Date.now()}-${file.name}`;
 
     const { error } = await supabase.storage
-      .from("eventos") // tu bucket
-      .upload(fileName, fileBuffer, {
-        contentType: "application/octet-stream",
+      .from("eventos")
+      .upload(fileName, buffer, {
+        contentType: file.type || "application/octet-stream",
         upsert: true,
       });
 
     if (error) {
       console.error(error);
-      return res.status(500).json({ error: "No se pudo subir a Supabase" });
+      return Response.json({ error: "No se pudo subir a Supabase" }, { status: 500 });
     }
 
-    // obtener URL pública
-    const { data: urlData } = supabase.storage
+    const { data } = supabase.storage
       .from("eventos")
       .getPublicUrl(fileName);
 
-    return res.status(200).json({
-      url: urlData.publicUrl,
-    });
+    return Response.json({ url: data.publicUrl });
 
   } catch (error) {
     console.error("Error al subir archivo a supa:", error);
-    return res.status(500).json({ error: "Error interno del servidor" });
+    return Response.json({ error: "Error interno del servidor" }, { status: 500 });
   }
 }
+

@@ -13,24 +13,22 @@ export default function Page() {
 
     return (
         <main >
-             <NavBar />
-            <div style={{ padding: 24, fontFamily: "Inter, sans-serif" }}>
-                <h1>Administrador </h1>
-                <h1>Bienvenido </h1>
-                <LogOut />
+            <NavBar />
+            <div className='text-xl font-bold m-4 border-b-2 pb-2 flex justify-between items-center'>
+                <h1>Bienvenido Administrador</h1>
             </div>
+            <LogOut />
        
-        <section style={{ marginTop: 20,padding: 24 }}>
-            <h2>Lista de clientes y eventos</h2>
-
+        <section >
+            <h2 className='text-xl mt-4 mb-4 ml-2 border-b-2'>Lista de clientes y eventos</h2>
             <button
                 onClick={() => router.push("/admin/clientes/new")}
-                className="bg-blue-600 text-white px-4 py-2 rounded"
+                className="bg-blue-600 text-white px-4 py-2 rounded mb-2"
                 >
                 Crear cliente
             </button>
-
-            {loading && <p>Cargando...</p>}
+        <div className='m-4'>
+            {loading && <span className="loading loading-dots loading-xl"></span>}
             {error && <p style={{ color: "red" }}>{error}</p>}
             
             {clientes.length === 0 && !loading && <p>No hay clientes.</p>}
@@ -39,6 +37,8 @@ export default function Page() {
                     <ClienteCard key={cliente.id} cliente={cliente} />
                  ))}
             </div>
+        </div>
+           
         </section>
         </main>
     );  

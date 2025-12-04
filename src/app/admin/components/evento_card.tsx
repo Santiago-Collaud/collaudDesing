@@ -58,20 +58,21 @@ export default function EventoCard({ evento }: { evento: Evento }) {
   
   return (
     <div className="card bg-base-100 w-96 shadow-sm m-4">
-      <h2 className="card-title justify-center border-b-5 text-xl font-bold"> {evento.tituloEvento}</h2>
+      <h2 className="card-title justify-center border-b-5 text-xl font-bold mb-4 mt-4 uppercase"> {evento.tituloEvento}</h2>
       <button 
       onClick={() => setShowEditModal(true)}
-      className="btn btn-neutral">editar evento</button>
-        <figure>
-            <img
-              src={evento.preview_url}
-              alt="preview"
-              style={{ width: 200, borderRadius: 6, marginBottom: 10 }}
-              className="m-4"
-            />
+      className="btn btn-soft">editar evento</button>
+          <figure>
+              <img
+                src={evento.preview_url}
+                alt="preview"
+                style={{ width: 200, borderRadius: 6, marginBottom: 10 }} 
+                className="m-4"
+              />
           </figure>
         <div className="card-body"> 
-          <h2>{evento.comentario || "—"}</h2>
+          <h1>Comentario</h1>
+          <h2 className="border rounded-lg m-4 text-center">{evento.comentario || "—"}</h2>
           <div className="card-actions">
             <div className="border p-4 rounded-lg w-full">
               {evento.link_drive && (
@@ -101,6 +102,7 @@ export default function EventoCard({ evento }: { evento: Evento }) {
 
             <p>Fecha: {new Date(evento.created_at).toLocaleString()}</p>
         </div>
+      
       {/* Modal */}
       {showEditModal && (
         <div
@@ -122,55 +124,66 @@ export default function EventoCard({ evento }: { evento: Evento }) {
               width: 350,
             }}
           >
-            <h3>Editar Evento</h3>
+            <h3 className="border-b-4">Editar Evento</h3>
 
             <form onSubmit={handleSubmit}>
-            <h3>Titulo evento</h3>
-              <input
-                name="tituloEvento"
-                value={formData.tituloEvento}
-                onChange={handleChange}
-                placeholder="Titulo evento"
-                style={{ width: "100%", marginTop: 8 }}
-              />
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Titulo Evento</legend>
+                  <input 
+                    type="text" 
+                    className="input" 
+                    name="tituloEvento"
+                    placeholder="Titulo evento"
+                    value={formData.tituloEvento}
+                    onChange={handleChange} />
+                </fieldset>
 
-              <h3>Comentario</h3>
-              <input
-                name="comentario"
-                value={formData.comentario}
-                onChange={handleChange}
-                placeholder="Comentario"
-                style={{ width: "100%", marginTop: 8 }}
-              />
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Comentario</legend>
+                  <input 
+                    type="text" 
+                    className="input" 
+                    name="comentario"
+                    placeholder="Comentario"
+                    value={formData.comentario}
+                    onChange={handleChange} />
+                </fieldset>
+              
 
-              <h3>Link Drive</h3>
-              <input
-                name="link_drive"
-                value={formData.link_drive}
-                onChange={handleChange}
-                placeholder="Link Drive"
-                style={{ width: "100%", marginTop: 8 }}
-              />
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">link Drive</legend>
+                  <input 
+                    type="text" 
+                    className="input" 
+                    name="link_drive"
+                    placeholder="Link Drive"
+                    value={formData.link_drive}
+                    onChange={handleChange} />
+                </fieldset>
 
-              <h3>Link Supa</h3>
-              <input
-                name="link_supa"
-                value={formData.link_supa}
-                onChange={handleChange}
-                placeholder="Link Supa"
-                style={{ width: "100%", marginTop: 8 }}
-              />
+              
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">link Supabase</legend>
+                  <input 
+                    type="text" 
+                    className="input" 
+                    name="link_supa"
+                    placeholder="Link Supabase"
+                    value={formData.link_supa}
+                    onChange={handleChange} />
+                </fieldset>
+              
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Preview</legend>
+                  <input 
+                    type="text" 
+                    className="input" 
+                    name="preview_url"
+                    placeholder="Preview URL"
+                    value={formData.preview_url}
+                    onChange={handleChange} />
+                </fieldset>
 
-              <h3>Preview</h3>
-              <input
-                name="preview_url"
-                value={formData.preview_url}
-                onChange={handleChange}
-                placeholder="Preview URL"
-                type="text"
-                style={{ width: "100%", marginTop: 8 }}
-              />
-              <h3>Activo</h3>
               <label style={{ marginTop: 10, display: "block" }}>
                 <input
                   type="checkbox"

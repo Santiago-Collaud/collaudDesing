@@ -37,7 +37,7 @@ export function useCreateEvento() {
     const formData = new FormData();
     formData.append("file", file);
 
-    const res = await fetch("/api/upload_supa", {
+    const res = await fetch("/api/upload/upload_supa", {
       method: "POST",
       body: formData,
       credentials: "include",
