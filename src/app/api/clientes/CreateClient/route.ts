@@ -3,8 +3,8 @@ import bcrypt from "bcryptjs";
 
 export async function POST(req: Request) {
   try {
-    const {username, pass, active} = await req.json();
-    const rol="admin";
+    const {username, pass, nombre, apellido, email} = await req.json();
+    const rol = 'cliente';
 
     // Verificar que la contraseña no esté vacía
     if (!pass) {
@@ -20,10 +20,12 @@ export async function POST(req: Request) {
       .insert([
         {
           username,
-          active,
+          nombre,
+          apellido,
+          email,
           rol,
           pass: hashedPass,
-          activo:'TRUE'
+          active:'TRUE'
         },
       ]);
 

@@ -8,7 +8,6 @@ import Lux from "../componetes/lux/page";
 import Nexo from "../componetes/nexo/page";
 import Vox from "../componetes/vox/page";
 import AboutMe from "../componetes/aboutMe/aboutMe";
-import Footer from "../componetes/footer/footer";
 import Hero from "../componetes/hero/hero";
 
 export default function Home(){
@@ -128,7 +127,7 @@ export default function Home(){
                 </div>
                 {/* FOOTER */}
                 </div>
-                    <Footer/>
+                   
                 </div>
 
                 {/* Modal Sobre Mi 

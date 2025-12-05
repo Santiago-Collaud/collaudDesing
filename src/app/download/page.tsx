@@ -6,7 +6,6 @@ import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
 import NavBar from "../componetes/navbar/nav";
-import { useAuth } from "../download/hook/useAuth"; 
 
 export default function DownloadPage() {
   const [username, setUsername] = useState("");
@@ -15,7 +14,7 @@ export default function DownloadPage() {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-  const { saveToken } = useAuth(); // ⬅️ USA EL HOOK
+  
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,7 +40,7 @@ export default function DownloadPage() {
       }
 
       // ⬅️ Guarda el token en localStorage + decodifica + setUser
-      saveToken(data.token);
+      /*saveToken(data.token);*/
 
       // Redirección según rol
       if (data.user.rol === "admin") {

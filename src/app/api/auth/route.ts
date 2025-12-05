@@ -53,7 +53,12 @@ export async function POST(req: Request) {
     const headers = new Headers();
     headers.append(
       'Set-Cookie',
-      `jwt_token=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=3600`
+      `token=${token}; Path=/; HttpOnly; SameSite=Strict; Secure; Max-Age=3600`
+    );
+
+    headers.append(
+      'Set-Cookie',
+      `rol=${data.rol}; Path=/; SameSite=Strict; Secure; Max-Age=3600`
     );
 
     return new Response(JSON.stringify({ user: data, token }), { status: 200, headers });
