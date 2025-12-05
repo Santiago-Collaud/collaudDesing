@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCreateCliente } from "../new/hook/useNewCliente"
+import { generateGiftCard } from "../new/generateGiftCard";
 
 export default function ClienteNewPage() {
   const router = useRouter();
@@ -32,6 +33,17 @@ export default function ClienteNewPage() {
     const ok = await createCliente(form);
 
     if (ok) {
+      // 1- Generar gift card
+    const img = await generateGiftCard({
+      username: form.username,
+      pass: form.pass,
+    });
+
+    // 2- Descargar automáticamente
+    const link = document.createElement("a");
+    link.download = `giftcard-${form.username}.jpg`;
+    link.href = img;
+    link.click();
       setTimeout(() => {
         router.push("/admin");
       }, 1000);
@@ -108,6 +120,29 @@ export default function ClienteNewPage() {
 
         {error && <p className="text-red-600">{error}</p>}
         {success && <p className="text-green-600">Cliente creado ✓</p>}
+
+    <button
+      type="button"
+      onClick={async () => {
+        const { username, pass } = form;
+
+        if (!username || !pass) {
+          alert("Necesitas usuario y contraseña para generar la tarjeta");
+          return;
+        }
+
+        const dataUrl = await generateGiftCard({ username, pass});
+
+        // Descargar
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = `giftcard-${username}.png`;
+        link.click();
+      }}
+      className="bg-purple-600 text-white w-full p-2 rounded"
+    >
+      Generar Gift Card
+    </button>
 
         <button
           disabled={loading}

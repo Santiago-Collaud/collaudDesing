@@ -46,6 +46,7 @@ export default function Home(){
                             <li><button onClick={() => setActiveSection("vox")}>VOX</button></li>
                             <li><button onClick={() => setActiveSection("nexo")}>NEXO</button></li>
                             <li><button onClick={() => setActiveSection("lux")}>LUX</button></li>
+                            <li><button onClick={() => router.push("/download")}>DESCARGAS</button></li>
                         </ul>
                     </div>
 
