@@ -19,11 +19,11 @@ export function useEventosCliente() {
       });
 
       if (!res.ok) throw new Error("Error al obtener clientes");
-
+      
       const data = await res.json();
       setEventos(data || []);
 
-      //console.log("Clients fetched:", data.clientes);
+      //console.log("Clients fetched:", data.activos);
 
     } catch (err) {
       console.error(err);

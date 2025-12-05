@@ -7,7 +7,7 @@ import { useUpdateEvento } from "../components/hook/useUpdateEvento";
 export default function EventoCard({ evento }: { evento: Evento }) {
   const [showEditModal, setShowEditModal] = useState(false);
    
-    const { updateEvento, loading, error } = useUpdateEvento();
+    const { updateEvento, error } = useUpdateEvento();
   
     // Estado local del formulario
     const [formData, setFormData] = useState({

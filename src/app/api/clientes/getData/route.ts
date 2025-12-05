@@ -27,6 +27,7 @@ export async function GET(req: Request) {
       const { payload: verified } = await jwtVerify(token, SECRET);
       payload = verified;
     } catch (err) {
+      console.error("Error verificando token:", err);
       return new Response(JSON.stringify({ error: "Token inválido" }), {
         status: 401,
       });
@@ -44,6 +45,7 @@ export async function GET(req: Request) {
       .from("eventos")
       .select("*")
       .eq("id_cliente", payload.id) // 👈 clave
+      .eq("active", true)  // ← FILTRO DIRECTO EN BD
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -55,6 +57,7 @@ export async function GET(req: Request) {
     return new Response(JSON.stringify(data), { status: 200 });
 
   } catch (err) {
+    console.error("Error en GET /api/clientes/getData:", err);
     return new Response(JSON.stringify({ error: "Error interno" }), {
       status: 500,
     });
