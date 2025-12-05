@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
 import { Evento } from "../../../interface/evento";
+import { useState } from "react";
 
 export default function EventoCard2({ evento }: { evento: Evento }) {
+  const [modalPreview, setModalPreview] = useState(false);
   
   return (
     <div className="card w-96 shadow-sm">
@@ -38,10 +40,10 @@ export default function EventoCard2({ evento }: { evento: Evento }) {
               )}
                 {evento.link_supa && (
                   <p>
-                    <a href={evento.link_supa} target="_blank">  
+                    <a onClick={() => setModalPreview(true)} target="_blank">  
                     <button type="button"
                       className="px-5 py-2.5 flex items-center justify-center rounded-sm cursor-pointer text-white text-sm tracking-wider font-medium border-none outline-none bg-blue-600 hover:bg-blue-700 active:bg-blue-600">
-                      Download
+                      Vista Previa
                       <svg xmlns="http://www.w3.org/2000/svg" width="16px" fill="currentColor" className="ml-2 inline" viewBox="0 0 24 24">
                         <path
                           d="M12 16a.749.749 0 0 1-.542-.232l-5.25-5.5A.75.75 0 0 1 6.75 9H9.5V3.25c0-.689.561-1.25 1.25-1.25h2.5c.689 0 1.25.561 1.25 1.25V9h2.75a.75.75 0 0 1 .542 1.268l-5.25 5.5A.749.749 0 0 1 12 16zm10.25 6H1.75C.785 22 0 21.215 0 20.25v-.5C0 18.785.785 18 1.75 18h20.5c.965 0 1.75.785 1.75 1.75v.5c0 .965-.785 1.75-1.75 1.75z"
@@ -61,6 +63,77 @@ export default function EventoCard2({ evento }: { evento: Evento }) {
             <p className="text-sm text-black mt-2">Fecha: {new Date(evento.created_at).toLocaleString()}</p>
         </div>
       </div>
+      {/* Modal de Preview */}
+        {modalPreview && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50"
+            onClick={() => setModalPreview(false)}
+          >
+            <div
+              className="bg-white rounded-lg p-4 max-w-3xl w-full relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Botón cerrar */}
+              <button
+                onClick={() => setModalPreview(false)}
+                className="absolute top-2 right-2 text-black text-xl"
+              >
+                ✖
+              </button>
+
+              <h2 className="text-lg font-semibold mb-4">Vista previa</h2>
+
+              {/* === PREVIEW SEGÚN TIPO === */}
+              <div className="w-full max-h-[70vh] overflow-auto flex justify-center items-center p-2">
+
+                {/* Imagen */}
+                {evento.link_supa?.match(/\.(jpg|jpeg|png|webp)$/i) && (
+                  <img
+                    src={evento.link_supa}
+                    className="max-w-full max-h-[65vh] object-contain"
+                  />
+                )}
+
+                {/* PDF */}
+                {evento.link_supa?.match(/\.pdf$/i) && (
+                  <embed
+                    src={evento.link_supa}
+                    type="application/pdf"
+                    className="w-full h-[65vh]"
+                  />
+                )}
+
+                {/* Video */}
+                {evento.link_supa?.match(/\.(mp4|mov|avi)$/i) && (
+                  <video src={evento.link_supa} controls className="max-w-full max-h-[65vh]" />
+                )}
+
+                {/* Audio */}
+                {evento.link_supa?.match(/\.(mp3|wav)$/i) && (
+                  <audio src={evento.link_supa} controls className="w-full" />
+                )}
+
+                {/* Tipo no soportado */}
+                {!evento.link_supa?.match(/\.(jpg|jpeg|png|webp|pdf|mp4|mov|avi|mp3|wav)$/i) && (
+                  <p className="text-center text-gray-700">
+                    No se puede previsualizar este tipo de archivo.
+                  </p>
+                )}
+              </div>
+
+              {/* BOTÓN DESCARGAR */}
+              <a
+                href={evento.link_supa}
+                download
+                target="_blank"
+                className="mt-4 block w-full bg-blue-600 hover:bg-blue-700 text-white text-center p-2 rounded"
+              >
+                Descargar archivo
+              </a>
+            </div>
+          </div>
+        )}
+
     </div>
   );
 }
