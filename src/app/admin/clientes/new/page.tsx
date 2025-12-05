@@ -70,7 +70,7 @@ export default function ClienteNewPage() {
           <label className="block font-medium">Contraseña *</label>
           <input
             name="pass"
-            type="password"
+            type="text"
             value={form.pass}
             onChange={handleChange}
             required
@@ -124,7 +124,7 @@ export default function ClienteNewPage() {
     <button
       type="button"
       onClick={async () => {
-        const { username, pass } = form;
+        const { username, pass, } = form;
 
         if (!username || !pass) {
           alert("Necesitas usuario y contraseña para generar la tarjeta");
