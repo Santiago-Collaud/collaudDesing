@@ -56,11 +56,17 @@ export default function ClienteEventosPage() {
       <NavBar />
       <h1 className="text-lg mt-4 mb-4 ml-4">Cliente: {cliente.username}</h1>
       <button
-                onClick={() => router.push(`/admin/clientes/${id}/eventos/new`)}
-                className="btn btn-soft btn-success"
-              >
-                + Crear evento
-            </button>
+        onClick={() => router.push(`/admin/clientes/${id}/eventos/new`)}
+        className="btn btn-soft btn-success"
+      >
+        + Crear evento
+      </button>
+      <button
+          onClick={() => router.push("/admin")}
+          className="btn btn-soft btn-success"
+          >
+          Administrador
+      </button>
 
       {cliente.eventos.length === 0 && <p>Este cliente no tiene eventos.</p>}
 
