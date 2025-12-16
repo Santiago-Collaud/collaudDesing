@@ -32,7 +32,7 @@ export default function Page() {
             {error && <p style={{ color: "red" }}>{error}</p>}
             
             {clientes.length === 0 && !loading && <p>No hay clientes.</p>}
-            <div className='grid grid-cols-2 gap-4'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8'>
                 {clientes.map((cliente) => (
                     <ClienteCard key={cliente.id} cliente={cliente} />
                  ))}

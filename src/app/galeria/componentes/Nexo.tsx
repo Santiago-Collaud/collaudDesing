@@ -1,17 +1,8 @@
-import React from "react";
+
 import { motion } from "framer-motion";
-import Image from "next/image";
 export default function Nexo(){
     return(
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <div className="flex items-center justify-center">
-                <Image src="/icon/Nexo.png" 
-                alt="Galería portada" 
-                width={400} 
-                height={300}
-                className="object-contain"/>
-            </div>
-            
+        <div>
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

@@ -21,7 +21,7 @@ export default function Galeria() {
   return (
     <div className="w-full min-h-screen bg-black overflow-hidden">
       {/* HERO - solo portada */}
-      <div className="relative w-full h-screen overflow-hidden">
+      <div className="relative w-full h-screen overflow-hidden focus:outline-none">
         {/* Fondo inicial con fade-in */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -60,19 +60,52 @@ export default function Galeria() {
           </motion.section>
         )}
       </div>
-<NavBar />
-      {/* SECCIÓN DE LUX */}
+      <NavBar />
+        <div className="collapse collapse-arrow bg-gray-100 border border-base-300">
+          <input type="radio" name="my-accordion-2"  className="bg-sky-200"defaultChecked/>
+            <div className="collapse-title flex justify-center">
+              <Image width={300} height={200} src="/icon/lux.png" alt="Lux"></Image>
+            </div>
+            <div className="collapse-content">
+              <section className="mt-10 mb-10 bg-gray-100">
+                <Lux/>
+              </section>
+            </div>
+          </div>
+        <div className="collapse collapse-arrow bg-rose-100 border border-base-300">
+          <input type="radio" name="my-accordion-2" />
+            <div className="collapse-title flex justify-center">
+              <Image width={300} height={200} src="/icon/vox.png" alt="Vox"></Image>
+            </div>
+            <div className="collapse-content text-sm">
+              <section className="z-20 min-h-screen bg-rose-100 flex items-center justify-center pt-10 pb-10">
+                <Vox/>
+              </section>
+            </div>
+        </div>
+        <div className="collapse collapse-arrow bg-sky-100 border border-base-300">
+          <input type="radio" name="my-accordion-2" />
+          <div className="collapse-title flex justify-center">
+            <Image width={300} height={200} src="/icon/nexo.png" alt="Nexo"></Image>
+          </div>
+          <div className="collapse-content text-sm">
+            <section className="z-20 min-h-screen bg-sky-100 flex items-center justify-center pt-10 pb-10">
+              <Nexo/>
+            </section>
+          </div>
+        </div>
+      {/* SECCIÓN DE LUX 
       <section className="z-20 min-h-screen bg-gray-100 flex items-center justify-center pt-10 pb-10">
           <Lux/>
-      </section>
-      {/* SECCIÓN DE VOX */}
+      </section>*/}
+      {/* SECCIÓN DE VOX 
       <section className="z-20 min-h-screen bg-rose-100 flex items-center justify-center pt-10 pb-10">
             <Vox/>
-      </section>
-      {/* SECCIÓN DE NEXO */}
+      </section>*/}
+      {/* SECCIÓN DE NEXO 
       <section className="z-20 min-h-screen bg-sky-100 flex items-center justify-center pt-10 pb-10">
             <Nexo/>
-      </section>
+      </section>*/}
     </div>
   );
 }
