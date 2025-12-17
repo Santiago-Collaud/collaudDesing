@@ -63,8 +63,8 @@ export default function Galeria() {
       <NavBar />
         <div className="collapse collapse-arrow bg-gray-100 border border-base-300">
           <input type="radio" name="my-accordion-2"  className="bg-sky-200"defaultChecked/>
-            <div className="collapse-title flex justify-center">
-              <Image width={300} height={200} src="/icon/lux.png" alt="Lux"></Image>
+            <div className="collapse-title flex justify-center ">
+              <Image width={300} height={200} src="/icon/Lux.png" alt="Lux" className="shadow-lg rounded-lg"></Image>
             </div>
             <div className="collapse-content">
               <section className="mt-10 mb-10 bg-gray-100">
@@ -75,7 +75,7 @@ export default function Galeria() {
         <div className="collapse collapse-arrow bg-rose-100 border border-base-300">
           <input type="radio" name="my-accordion-2" />
             <div className="collapse-title flex justify-center">
-              <Image width={300} height={200} src="/icon/vox.png" alt="Vox"></Image>
+              <Image width={300} height={200} src="/icon/Vox.png" alt="Vox" className="shadow-lg rounded-lg"></Image>
             </div>
             <div className="collapse-content text-sm">
               <section className="z-20 min-h-screen bg-rose-100 flex items-center justify-center pt-10 pb-10">
@@ -86,7 +86,7 @@ export default function Galeria() {
         <div className="collapse collapse-arrow bg-sky-100 border border-base-300">
           <input type="radio" name="my-accordion-2" />
           <div className="collapse-title flex justify-center">
-            <Image width={300} height={200} src="/icon/nexo.png" alt="Nexo"></Image>
+            <Image width={300} height={200} src="/icon/Nexo.png" alt="Nexo" className="shadow-lg rounded-lg"></Image>
           </div>
           <div className="collapse-content text-sm">
             <section className="z-20 min-h-screen bg-sky-100 flex items-center justify-center pt-10 pb-10">
