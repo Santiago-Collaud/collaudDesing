@@ -1,3 +1,4 @@
+//endpoint para crear un nuevo evento
 import { NextResponse } from "next/server";
 import { supabase } from "../../../../../lib/supabaseClient";
 
@@ -13,9 +14,11 @@ export async function POST(req: Request) {
       link_supa,
       link_drive,
       active = true,
+      estado_pago,
+      precio,
     } = body;
 
-    //console.log(tituloEvento, comentario, preview_url, link_supa, link_drive, active);
+    //console.log(tituloEvento, comentario, preview_url, link_supa, link_drive, active, link_mp,precio);
 
     if (!tituloEvento || !comentario || !preview_url) {
       return NextResponse.json(
@@ -34,6 +37,8 @@ export async function POST(req: Request) {
         link_supa: link_supa || null,
         link_drive: link_drive || null,
         active,
+        estado_pago: estado_pago || "impago",
+        precio: precio || 0,
       })
       .select()
       .single();

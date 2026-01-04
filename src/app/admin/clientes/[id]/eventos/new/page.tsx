@@ -1,3 +1,4 @@
+//modulo para crear un nuevo envento para un cliente especifico
 "use client";
 
 import { useState } from "react";
@@ -16,6 +17,8 @@ export default function CrearEventoPage() {
   const [linkDrive, setLinkDrive] = useState("");
   const [previewFile, setPreviewFile] = useState<File | null>(null);
   const [archivoSupa, setArchivoSupa] = useState<File | null>(null);
+  const [pagado , setPagado] = useState(false);
+  const [precio, setPrecio] = useState<number | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,6 +34,8 @@ export default function CrearEventoPage() {
       archivoSupa,
       link_drive: linkDrive || null,
       cliente_id: id,
+      estado_pago: pagado ? "pagado" : "impago",
+      precio,
     });
   };
 
@@ -87,8 +92,30 @@ export default function CrearEventoPage() {
             onChange={(e) => setArchivoSupa(e.target.files?.[0] || null)} 
             className="file-input"/>
       </div>
-        
 
+      <div className="flex items-center gap-2">
+      <input
+        type="checkbox"
+        checked={pagado}
+        onChange={(e) => setPagado(e.target.checked)}
+      />
+      <span>Evento ya pagado</span>
+    </div>
+    {pagado==false &&(
+    <div className="border rounded-lg m-4 p-2">
+          <h2>precio</h2>
+          <input
+            type="number"
+            placeholder="Precio del evento"
+            value={precio || "0.0"}
+            onChange={(e) => setPrecio(Number(e.target.value))}
+            min={0}
+            max={1000000}
+            className="border p-2 w-full"
+          />
+        </div>
+    )}
+    
         <button type="submit" disabled={loading} className="btn btn-primary">
           {loading ? "Creando..." : "Crear evento"}
         </button>

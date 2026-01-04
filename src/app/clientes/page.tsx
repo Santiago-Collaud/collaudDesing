@@ -1,10 +1,11 @@
+//modulo de clientes, donde se muestran los eventos disponibles para el cliente
 "use client";
 
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEventosCliente } from "./hook/useEventosCliente";
 import EventoCard2 from "../clientes/componente/evento_card2";
 import NavBar from "../componetes/navBarCliente/navCliente";
+import LegalDescarga from "../componetes/avisoLegal/llegalDescarga";
 
 // ← IMPORTAMOS VARIANTS
 import { fadeUp, fadeUpDelayed } from "../clientes/variants/variants";
@@ -48,7 +49,7 @@ export default function Page() {
               <p>No hay eventos disponibles.</p>
             )}
 
-            <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1">
+            <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1 ">
               {eventos.map((evento) => (
                 <motion.div
                   key={evento.id}
@@ -64,6 +65,7 @@ export default function Page() {
           </AnimatePresence>
         </div>
       </motion.section>
+      <LegalDescarga />
     </main>
   );
 }

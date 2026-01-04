@@ -9,4 +9,7 @@ export interface IEventoUpdate {
   newSupaFile?: File | null;     // opcional
   active: boolean;
   id_cliente: string;
+  estado_pago: string;
+  link_MP?: string | null;
+  precio: number;
 }

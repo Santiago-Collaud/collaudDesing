@@ -1,3 +1,4 @@
+//hook para crear un nuevo evento para un cliente especifico
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -9,6 +10,8 @@ interface CreateEventoPayload {
   archivoSupa?: File | null;
   link_drive?: string | null;
   cliente_id: string;
+  estado_pago?: "pagado" | "impago";
+  precio?: number | null;
 }
 
 export function useCreateEvento() {
@@ -70,7 +73,9 @@ export function useCreateEvento() {
           preview_url,
           link_supa,
           link_drive: payload.link_drive || null,
+          estado_pago: payload.estado_pago || "impago",
           cliente_id: payload.cliente_id,
+          precio: payload.precio || null,
         }),
       });
 

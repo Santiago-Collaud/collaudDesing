@@ -1,3 +1,4 @@
+//end point para actualizar un evento existente
 import { supabase } from "../../../../../lib/supabaseClient";
 import { jwtVerify } from "jose";
 
@@ -29,7 +30,7 @@ export async function POST(req: Request) {
     }
 
     // 3. Leer body
-    const { id, tituloEvento, comentario, link_drive, link_supa, preview_url, active } =
+    const { id, tituloEvento, comentario, link_drive, link_supa, preview_url, active,estado_pago,precio } =
       await req.json();
 
     if (!id) {
@@ -64,6 +65,8 @@ export async function POST(req: Request) {
       link_supa,
       preview_url,
       active,
+      estado_pago,
+      precio,
     };
 
     console.log("ID recibido:", id);
