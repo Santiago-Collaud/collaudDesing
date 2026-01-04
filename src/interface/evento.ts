@@ -8,4 +8,7 @@ export interface Evento {
     active: boolean;
     created_at: string;
     id_cliente: string;
+    estado_pago: string;
+    link_mp: string ;
+    precio: number;
 }

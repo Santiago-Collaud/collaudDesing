@@ -18,6 +18,9 @@ export default function EventoCard({ evento }: { evento: Evento }) {
       link_supa: evento.link_supa || "",
       preview_url: evento.preview_url || "",
       active: evento.active ?? true,
+      estado_pago: evento.estado_pago || "pendiente",
+      link_MP: evento.link_mp || "",
+      precio: evento.precio || 0,
     });
   
     const handleChange = (
@@ -44,7 +47,7 @@ export default function EventoCard({ evento }: { evento: Evento }) {
       id: evento.id,
     };
 
-    //console.log("Datos a enviar:", payload);
+    //console.log("Datos a enviar:", payload); OK
 
     const ok = await updateEvento(payload);
 
@@ -99,8 +102,24 @@ export default function EventoCard({ evento }: { evento: Evento }) {
                 {evento.active ? "Activo" : "Inactivo"}
               </strong>
             </p>
+            <h2>Precio: ${evento.precio || "0"}</h2>
+            <p>
+              Estado de pago:{" "}
+              <strong
+                style={{
+                  color:
+                    evento.estado_pago === "pagado"
+                      ? "green"
+                      : evento.estado_pago === "impago"
+                      ? "red"
+                      : "orange",
+                }}
+              >
+                {evento.estado_pago}
+              </strong>
+            </p>
 
-            <p>Fecha: {new Date(evento.created_at).toLocaleString()}</p>
+            <p>Fecha: {new Date(evento.created_at).toLocaleString()}</p>  
         </div>
       
       {/* Modal */}
@@ -193,6 +212,40 @@ export default function EventoCard({ evento }: { evento: Evento }) {
                 />{" "}
                 Activo
               </label>
+
+              <label style={{ marginTop: 10, display: "block" }}>
+                <fieldset className="fieldset">
+                  <legend className="fieldset-legend">Estado de pago</legend>
+
+                  <select
+                    name="estado_pago"
+                    className="select"
+                    value={formData.estado_pago}
+                    onChange={handleChange}
+                  >
+                    <option value="impago">Impago</option>
+                    <option value="pagado">Pagado</option>
+                    <option value="pendiente">Pendiente</option>
+                  </select>
+                </fieldset>
+              </label>
+
+            {formData.estado_pago === "impago" && (
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">Precio</legend>
+                  <input 
+                    type="number" 
+                    className="input" 
+                    name="precio"
+                    placeholder="0"
+                    value={formData.precio}
+                    onChange={handleChange} 
+                    min={0}
+                    max={1000000}/>
+                </fieldset>
+            )}
+              
+
 
               <button
                 type="submit"

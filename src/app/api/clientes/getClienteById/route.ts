@@ -68,7 +68,10 @@ export async function GET(req: Request) {
           link_supa,
           preview_url,
           active,
-          created_at
+          created_at,
+          estado_pago,
+          link_mp,
+          precio
         )
       `)
       .eq("id", id)

@@ -76,6 +76,9 @@ export function useUpdateEvento() {
           link_supa,
           preview_url,
           active: payload.active,
+          estado_pago: payload.estado_pago,
+          link_MP: payload.link_MP || null,
+          precio: payload.precio,
         }),
       });
 

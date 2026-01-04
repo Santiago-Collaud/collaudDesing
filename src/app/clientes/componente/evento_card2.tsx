@@ -1,14 +1,18 @@
+//card de cada evento
 "use client";
-import React from "react";
+
 import { Evento } from "../../../interface/evento";
 import { useState } from "react";
+import { useCrearPago } from "../../clientes/componente/hook/useCrearPago";
+
 
 export default function EventoCard2({ evento }: { evento: Evento }) {
   const [modalPreview, setModalPreview] = useState(false);
+  const { crearPago, loading } = useCrearPago();
   
   return (
-    <div className="card w-96 shadow-sm">
-        <div className="bg-white grid sm:grid-cols-2 items-center border border-gray-200 shadow-md w-full max-w-2xl max-sm:max-w-sm rounded-lg overflow-hidden mx-auto mt-4">
+    <div className="card w-100 h-80 shadow-sm">
+        <div className="bg-white grid sm:grid-cols-2 items-center border border-gray-200 shadow-md w-full max-w-2xl max-sm:max-w-sm rounded-lg overflow-hidden mx-auto mt-4  overflow-y-scroll">
         <div className="min-h-[280px] h-full hover:scale-105 transition-transform duration-500 ease-in-out overflow-hidden">
           <img 
             src={evento.preview_url} 
@@ -22,6 +26,21 @@ export default function EventoCard2({ evento }: { evento: Evento }) {
             {evento.comentario || "No hay comentario."}
           </p>
           
+
+          {evento.estado_pago == "impago" && (
+          <div className="flex flex-wrap items-center cursor-pointer w-full mt-4 gap-4 mb-4">
+            <h1 className="text-black">EVENTO IMPAGO</h1> 
+            
+            <button
+              disabled={loading}
+              onClick={() => crearPago({ eventoId: evento.id })}
+              className="btn btn-alert"
+            >
+              {loading ? "Redirigiendo..." : "Pagar"}
+            </button>
+          </div>
+        )}
+          {evento.estado_pago == "pagado" && (
           <div className="flex flex-wrap items-center cursor-pointer w-full mt-4 gap-4 mb-4">
             {evento.link_drive && (
                 <p>
@@ -53,7 +72,8 @@ export default function EventoCard2({ evento }: { evento: Evento }) {
                     </a>
                   </p>
                 )}
-          </div>
+          </div> 
+        )}
           <p className="text-black">
               Estado:{" "}
               <strong style={{ color: evento.active ? "green" : "red" }}>
@@ -63,6 +83,7 @@ export default function EventoCard2({ evento }: { evento: Evento }) {
             <p className="text-sm text-black mt-2">Fecha: {new Date(evento.created_at).toLocaleString()}</p>
         </div>
       </div>
+
       {/* Modal de Preview */}
         {modalPreview && (
           <div
