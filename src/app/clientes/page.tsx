@@ -65,7 +65,10 @@ export default function Page() {
           </AnimatePresence>
         </div>
       </motion.section>
-      <LegalDescarga />
+      <div>
+        <LegalDescarga />
+      </div>
+      
     </main>
   );
 }

@@ -62,9 +62,9 @@ export async function POST(req: Request) {
         notification_url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/webhooks/mercadopago`,
 
         back_urls: {
-          success: `${process.env.NEXT_PUBLIC_SITE_URL}/pago-exitoso`,
-          failure: `${process.env.NEXT_PUBLIC_SITE_URL}/pago-fallido`,
-          pending: `${process.env.NEXT_PUBLIC_SITE_URL}/pago-pendiente`,
+          success: `${process.env.NEXT_PUBLIC_SITE_URL}/backUrlMP/pago-exitoso`,
+          failure: `${process.env.NEXT_PUBLIC_SITE_URL}/backUrlMP/pago-fallido`,
+          pending: `${process.env.NEXT_PUBLIC_SITE_URL}/backUrlMP/pago-pendiente`,
         },
         auto_return: "approved",
       }),
