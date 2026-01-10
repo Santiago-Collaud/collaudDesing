@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { supabase } from "../../../../../lib/supabaseClient";
+import { supabaseAdmin } from "../../../../../lib/supabaseAdmin";
 
 export async function POST(req: Request) {
   try {
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true }, { status: 200 });
     }
 
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from("eventos")
       .update({
         estado_pago: "pagado",
