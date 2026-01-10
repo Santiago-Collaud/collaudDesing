@@ -60,15 +60,21 @@ export async function POST(req: Request) {
         external_reference: evento.id,
 
         notification_url: `${process.env.NEXT_PUBLIC_SITE_URL}/api/webhooks/mercadopago`,
+        //notification_url: "https://automotive-tracie-noncorrelatively.ngrok-free.dev/api/webhooks/mercadopago",
 
         back_urls: {
           success: `${process.env.NEXT_PUBLIC_SITE_URL}/backUrlMP/pago-exitoso`,
+          //success: `https://automotive-tracie-noncorrelatively.ngrok-free.dev/backUrlMP/pago-exitoso`,
           failure: `${process.env.NEXT_PUBLIC_SITE_URL}/backUrlMP/pago-fallido`,
+          //failure: `https://automotive-tracie-noncorrelatively.ngrok-free.dev/backUrlMP/pago-fallido`,
           pending: `${process.env.NEXT_PUBLIC_SITE_URL}/backUrlMP/pago-pendiente`,
+          //pending: `https://automotive-tracie-noncorrelatively.ngrok-free.dev/backUrlMP/pago-pendiente`,
         },
         auto_return: "approved",
       }),
     });
+
+    console.log("Mercado Pago response status:", mpRes.status);
 
     if (!mpRes.ok) {
       throw new Error("Error creando preferencia de pago");
@@ -76,6 +82,13 @@ export async function POST(req: Request) {
 
     const mpData = await mpRes.json();
 
+    /* PRUEBAS
+    return NextResponse.json(
+      { init_point: mpData.sandbox_init_point },
+      { status: 200 }
+    );*/
+    /*
+    PRODUCCION*/
     return NextResponse.json(
       { init_point: mpData.init_point },
       { status: 200 }
