@@ -1,21 +1,46 @@
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "../../../../../lib/supabaseAdmin";
+import crypto from "crypto";
+
+function verifyMercadoPagoSignature(
+  rawBody: string,
+  signatureHeader: string | null
+): boolean {
+  if (!signatureHeader) return false;
+
+  const secret = process.env.MP_WEBHOOK_SECRET!;
+  const expectedSignature = crypto
+    .createHmac("sha256", secret)
+    .update(rawBody)
+    .digest("hex");
+
+  return signatureHeader === expectedSignature;
+}
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const rawBody = await req.text();
+    const signature = req.headers.get("x-signature");
+
+    // 🔐 Verificación de firma MP
+    const isValid = verifyMercadoPagoSignature(rawBody, signature);
+    if (!isValid) {
+      console.error("❌ Webhook rechazado: firma inválida");
+      return NextResponse.json({ ok: false }, { status: 401 });
+    }
+
+    const body = JSON.parse(rawBody);
 
     console.log("=== MP WEBHOOK RECIBIDO ===");
-    console.log("BODY:", JSON.stringify(body));
+    console.log("BODY:", body);
 
     const paymentId = body?.data?.id;
-    console.log("PAYMENT ID:", paymentId);
-
     if (!paymentId) {
-      console.log("Webhook sin paymentId -> OK");
+      console.log("Webhook sin paymentId");
       return NextResponse.json({ ok: true }, { status: 200 });
     }
 
+    // 🔎 Consultar pago real en MP
     const mpResponse = await fetch(
       `https://api.mercadopago.com/v1/payments/${paymentId}`,
       {
@@ -26,67 +51,62 @@ export async function POST(req: Request) {
     );
 
     if (!mpResponse.ok) {
-      const txt = await mpResponse.text();
-      console.error("ERROR CONSULTANDO MP:", txt);
+      console.error("Error consultando MP:", await mpResponse.text());
       return NextResponse.json({ ok: true }, { status: 200 });
     }
 
     const paymentData = await mpResponse.json();
 
-    console.log("=== PAYMENT DATA MP ===");
-    console.log("STATUS:", paymentData.status);
+    console.log("PAYMENT STATUS:", paymentData.status);
     console.log("EXTERNAL_REFERENCE:", paymentData.external_reference);
-    console.log("LIVE_MODE:", paymentData.live_mode);
 
-    // Solo pagos aprobados
+    // ⛔ Solo pagos aprobados
     if (paymentData.status !== "approved") {
-      console.log("Pago no aprobado -> se ignora");
       return NextResponse.json({ ok: true }, { status: 200 });
     }
 
     const eventId = paymentData.external_reference;
     if (!eventId) {
-      console.log("Pago aprobado SIN external_reference");
+      console.error("Pago aprobado sin external_reference");
       return NextResponse.json({ ok: true }, { status: 200 });
     }
 
-    // 🔎 PRUEBA CLAVE: ¿existe el evento?
-    const { data: eventoExiste, error: selectError } = await supabaseAdmin
+    // 🔁 IDEMPOTENCIA: verificar estado actual
+    const { data: evento, error: selectError } = await supabaseAdmin
       .from("eventos")
       .select("id, estado_pago")
-      .eq("id", eventId);
+      .eq("id", eventId)
+      .single();
 
-    console.log("SELECT EVENTOS RESULT:", eventoExiste);
-    console.log("SELECT ERROR:", selectError);
-
-    if (!eventoExiste || eventoExiste.length === 0) {
-      console.error("EVENTO NO EXISTE EN DB PARA ID:", eventId);
+    if (selectError || !evento) {
+      console.error("Evento no encontrado:", eventId);
       return NextResponse.json({ ok: true }, { status: 200 });
     }
 
-    // 🧨 UPDATE REAL
-    const { data: updateData, error: updateError } = await supabaseAdmin
+    if (evento.estado_pago === "pagado") {
+      console.log("Evento ya pagado → idempotencia OK");
+      return NextResponse.json({ ok: true }, { status: 200 });
+    }
+
+    // ✅ Update definitivo
+    const { error: updateError } = await supabaseAdmin
       .from("eventos")
       .update({
         estado_pago: "pagado",
         fecha_pago: new Date().toISOString(),
         mp_payment_id: paymentId,
       })
-      .eq("id", eventId)
-      .select();
-
-    console.log("UPDATE RESULT DATA:", updateData);
-    console.log("UPDATE RESULT ERROR:", updateError);
+      .eq("id", eventId);
 
     if (updateError) {
-      console.error("ERROR ACTUALIZANDO EVENTO:", updateError);
+      console.error("Error actualizando evento:", updateError);
+    } else {
+      console.log("Evento actualizado correctamente:", eventId);
     }
-
-    console.log("=== FIN WEBHOOK ===");
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
-    console.error("WEBHOOK CRASH:", err);
+    console.error("Webhook crash:", err);
     return NextResponse.json({ ok: true }, { status: 200 });
   }
 }

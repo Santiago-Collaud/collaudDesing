@@ -27,6 +27,13 @@ export default function PagoExitoso() {
       <p className="mt-4 mb-4">
         Vuelve a entrar a la aplicación en unos minutos para ver los cambios.
       </p>
+      <div>
+        <button
+          onClick={() => window.location.href = '/download'} 
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Volver a iniciar la sesión
+          </button>      
+      </div>
     </div>
   );
 }
