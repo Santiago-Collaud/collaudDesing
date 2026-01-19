@@ -17,6 +17,7 @@ export async function GET() {
       );
     }
 
+    console.log("llama a mantener-vivo");
     console.log("eventos count:", count);
     
     return new Response(
