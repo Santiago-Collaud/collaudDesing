@@ -10,6 +10,8 @@ import Vox from "../componetes/vox/page";
 import AboutMe from "../componetes/aboutMe/aboutMe";
 import Hero from "../componetes/hero/hero";
 
+import Turnit from "../componetes/apps/turnit";
+
 export default function Home(){
     //const [showModal, setShowModal] = useState(false);
     const [activeSection, setActiveSection] = useState<"lux" | "nexo" | "vox" | "hero" | null>(null);
@@ -121,8 +123,12 @@ export default function Home(){
                             <Lux />
                         </motion.div>
                         )}
+                        <div className="mt-4 mb-4 rounded-lg shadow-lg border">
+                            <Turnit />
+                        </div>
+                        
                     </AnimatePresence>
-                    <div className="pt-10 pb-8">
+                    <div className=" ">
                         <AboutMe />
                     </div>
                 </div>
