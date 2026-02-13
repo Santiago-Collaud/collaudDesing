@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 
+import Turnit from "../componetes/apps/turnit";
+
 import NavBar from "../componetes/navbar/nav";
 
 export default function DownloadPage() {
