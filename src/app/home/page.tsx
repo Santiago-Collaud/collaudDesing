@@ -10,8 +10,6 @@ import Vox from "../componetes/vox/page";
 import AboutMe from "../componetes/aboutMe/aboutMe";
 import Hero from "../componetes/hero/hero";
 
-import Turnit from "../componetes/apps/turnit";
-
 export default function Home(){
     //const [showModal, setShowModal] = useState(false);
     const [activeSection, setActiveSection] = useState<"lux" | "nexo" | "vox" | "hero" | null>(null);
@@ -49,6 +47,7 @@ export default function Home(){
                             <li><button onClick={() => setActiveSection("nexo")}>NEXO</button></li>
                             <li><button onClick={() => setActiveSection("lux")}>LUX</button></li>
                             <li><button onClick={() => router.push("/download")}>DESCARGAS</button></li>
+                            <li><button onClick={() => router.push("/software")}>SOFTWARE</button></li>
                         </ul>
                     </div>
 
@@ -69,6 +68,7 @@ export default function Home(){
                         <li><a><button onClick={() => router.push("/contacto")}>Contacto</button></a></li>
                         <li><a><button onClick={() => router.push("/galeria")}>Galeria</button></a></li>
                         <li><a><button onClick={() => router.push("/download")}>Descargas</button></a></li>
+                        <li><a><button onClick={() => router.push("/software")}>Software</button></a></li>
                         {/*<li><a><label htmlFor="my_modal_6">Sobre Mi</label></a></li>*/}
 
                     </ul>
@@ -123,9 +123,7 @@ export default function Home(){
                             <Lux />
                         </motion.div>
                         )}
-                        <div className="mt-4 mb-4 rounded-lg shadow-lg border">
-                            <Turnit />
-                        </div>
+
                         
                     </AnimatePresence>
                     <div className=" ">
