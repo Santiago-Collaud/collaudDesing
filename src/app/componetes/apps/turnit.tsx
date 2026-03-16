@@ -2,7 +2,7 @@
 export default function Turnit() {
     return (
         <div>
-            <article className="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-xs">
+            <article className="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-xs ">
                 <img alt="" src="/icon/turnit-icon-512.png" 
                 className="h-56 w-full object-cover" />
 
@@ -18,24 +18,23 @@ export default function Turnit() {
                         Con nuestra plataforma intuitiva, podrás organizar tus citas, 
                     </p>
 
-                    <a href="https://www.canva.com/design/DAHBO9ZN-K4/Y5gJeDhH6nWNxnQmzBb_Ww/view?utlId=h704e0ab85c" 
-                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600 ">
-                        Saber mas
-
-                        {/*<span aria-hidden="true" className="block transition-all group-hover:ms-0.5 rtl:rotate-180">
-                            →
-                        </span>*/}
+                    <a 
+                    href="https://www.canva.com/design/DAHBO9ZN-K4/Y5gJeDhH6nWNxnQmzBb_Ww/view?utlId=h704e0ab85c" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600 shadow-sm"
+                    >
+                    Saber mas
                     </a>
 
-                    <a href="https://turnit-nine.vercel.app/" 
-                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600 ml-4">
-                        Probar
-
-                        {/*<span aria-hidden="true" className="block transition-all group-hover:ms-0.5 rtl:rotate-180">
-                            →
-                        </span>*/}
+                    <a 
+                    href="https://turnitapp.vercel.app/" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600 ml-4"
+                    >
+                    Probar
                     </a>
-
                     
                 </div>
             </article>
