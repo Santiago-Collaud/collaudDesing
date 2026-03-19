@@ -1,3 +1,4 @@
+import { sendGAEvent } from '@next/third-parties/google'
 
 export default function Turnit() {
     return (
@@ -19,21 +20,27 @@ export default function Turnit() {
                     </p>
 
                     <a 
-                    href="https://www.canva.com/design/DAHBO9ZN-K4/Y5gJeDhH6nWNxnQmzBb_Ww/view?utlId=h704e0ab85c" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600 shadow-sm"
-                    >
-                    Saber mas
+                        href="https://www.canva.com/design/DAHBO9ZN-K4/Y5gJeDhH6nWNxnQmzBb_Ww/view?utlId=h704e0ab85c" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600 shadow-sm"
+                        onClick={() => sendGAEvent('event', 'ver_tutorial_turnit', {
+                            source: 'portfolio'
+                        })}
+                        >
+                        Saber mas
                     </a>
 
                     <a 
-                    href="https://turnitapp.vercel.app/" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600 ml-4"
-                    >
-                    Probar
+                        href="https://turnitapp.vercel.app/" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600 ml-4"
+                        onClick={() => sendGAEvent('event', 'probar_turnit', {
+                            source: 'portfolio'
+                        })}
+                        >
+                        Probar
                     </a>
                     
                 </div>
