@@ -4,6 +4,8 @@ import "./globals.css";
 import AuthRouteWatcher from "../app/AuthRouteWatcher";
 import Footer from "./componetes/footer/footer";
 
+import { GoogleAnalytics } from '@next/third-parties/google' //google analytics
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -36,6 +38,7 @@ export default function RootLayout({
         
         {children}
         <Footer />
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID!} />
       </body>
     </html>
   );
