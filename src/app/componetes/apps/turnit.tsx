@@ -1,3 +1,4 @@
+"use client"
 import { sendGAEvent } from '@next/third-parties/google'
 
 export default function Turnit() {
