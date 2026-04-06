@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import NavBar from '../componetes/navbar/nav';
 import Turnit from '../componetes/apps/turnit';
+import PPT from "../componetes/apps/PPT";
 
 export default function SoftwarePage() {
   return (
@@ -25,13 +26,23 @@ export default function SoftwarePage() {
           <h2 className="text-xl md:text-xl text-gray-300  border-gray-600">- Landing pages y websites.</h2>
           <h2 className="text-xl md:text-xl text-gray-300 mb-6 border-b border-gray-600">- Sistemas de gestión.</h2>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, ease: "easeOut" }}
             >
-              <Turnit />
+              <div className="grid grid-cols-1 flex-wrap gap-6 sm:grid-cols-2">
+                <div className="hover:scale-105 transition-transform duration-300">
+                  <Turnit />
+                </div>
+                <div className="hover:scale-105 transition-transform duration-300">
+                  <PPT />
+                </div>
+                
+                
+              </div>
+              
             </motion.div>
           </div>
         </div>
