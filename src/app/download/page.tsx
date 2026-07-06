@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { Eye, EyeOff } from "lucide-react";
 
 import Turnit from "../componetes/apps/turnit";
 
@@ -14,6 +15,8 @@ export default function DownloadPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);// Estado para mostrar/ocultar la contraseña
 
   const router = useRouter();
   
@@ -97,15 +100,26 @@ export default function DownloadPage() {
               </div>
 
               <div>
-                <label className="text-neutral-300 text-sm">Contraseña</label>
+              <label className="text-neutral-300 text-sm">Contraseña</label>
+
+              <div className="relative mt-1">
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
-                  className="w-full mt-1 px-3 py-2 bg-neutral-800 text-white rounded-lg outline-none border border-neutral-700 focus:border-white transition"
+                  className="w-full px-3 py-2 pr-12 bg-neutral-800 text-white rounded-lg outline-none border border-neutral-700 focus:border-white transition"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-3 flex items-center text-neutral-400 hover:text-white"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
+            </div>
 
               <button
                 type="submit"

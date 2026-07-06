@@ -58,6 +58,33 @@ export default function EventoCard({ evento }: { evento: Evento }) {
     alert(error || "Error al actualizar");
   }
   }
+
+  const handleDelete = async () => {
+
+  const confirmar = window.confirm(
+    "¿Eliminar este evento? Esta acción no se puede deshacer."
+  );
+
+  if (!confirmar) return;
+  console.log("Eliminando evento con ID:", evento.id); // Agregado para depuración
+
+  const res = await fetch("/api/evento/deleteEvento", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: evento.id,
+    }),
+  });
+
+  if (res.ok) {
+    alert("Evento eliminado");
+    window.location.reload();
+  } else {
+    alert("No se pudo eliminar el evento");
+  }
+};
   
   return (
     <div className="card bg-base-100 w-96 shadow-sm m-4">
@@ -260,6 +287,22 @@ export default function EventoCard({ evento }: { evento: Evento }) {
                 }}
               >
                 Guardar cambios
+              </button>
+              <button
+                type="button"
+                onClick={handleDelete}
+                style={{
+                  marginTop: 20,
+                  width: "100%",
+                  padding: 8,
+                  background: "#dc2626",
+                  border: "none",
+                  borderRadius: 6,
+                  color: "white",
+                  cursor: "pointer",
+                }}
+              >
+                Eliminar evento
               </button>
 
               <button
