@@ -1,3 +1,4 @@
+//cliente de supa para setlist
 import { createClient } from "@supabase/supabase-js";
 
 export const supabaseAdmin = createClient(
