@@ -21,10 +21,10 @@ export async function GET(
     "http://localhost:3000";*/
 
   const qrUrl =
-  `${process.env.NEXT_PUBLIC_APP_URL}/api/queSigue/export/${id}`;
+  `${process.env.NEXT_PUBLIC_APP_URL}/api/queSigue/viewer/${id}`;
 
-  return Response.json({
-    url: `${qrUrl}/api/queSigue/viewer/${id}`,
-  });
+return Response.json({
+  url: qrUrl,
+});
 
 }
