@@ -12,9 +12,9 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    console.log("mail: ",process.env.EMAIL_USER,"pass: ",process.env.EMAIL_PASS)
+    //console.log("mail: ",process.env.EMAIL_USER,"pass: ",process.env.EMAIL_PASS)
 
-    console.log('Nombre:',nombre,'mail:',email, 'mensaje:',mensaje)
+    //console.log('Nombre:',nombre,'mail:',email, 'mensaje:',mensaje)
     
     // Configuración del transport de nodemailer 
     const transport = nodemailer.createTransport({

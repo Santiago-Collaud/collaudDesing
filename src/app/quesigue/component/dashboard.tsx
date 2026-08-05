@@ -26,14 +26,15 @@ export default function Dashboard({
       <header className="flex justify-between items-center mb-8">
       <nav>
         <div>
+          <img src="/icon/queSigue/icons/queSigue-texto.png" alt="logo" className="h-auto w-80" />
           <h1 className="text-3xl font-bold">
-            queSigue Creator
+            Creator
           </h1>
+        </div>
 
-          <p className="opacity-70">
+          <p className="opacity-70 border rounded-lg p-2 mt-2 mb-4">
             Usuario: {username}
           </p>
-        </div>
 
         <button
           className="btn btn-outline" 
