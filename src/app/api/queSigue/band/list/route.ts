@@ -21,6 +21,7 @@ export async function GET(req: Request) {
       .from("setlist-band")
       .select("*")
       .eq("id_admin", id_admin)
+      .neq("active", "DELETE")
       .order("name", { ascending: true });
 
       //console.log("BAND DATA:", data);

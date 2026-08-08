@@ -1,7 +1,8 @@
+//dashboard de crear setlist, con el listado de canciones y la posibilidad de agregar nuevas canciones al setlist
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import ShowHeader from "../../component/show/ShowHeader";
 import ShowToolbar from "../../component/show/ShowToolbar";
@@ -17,12 +18,14 @@ interface Show {
 }
 
 export default function ShowPage() {
-  const params = useParams();
+  const params = useParams()
   const id = params.id as string;
 
   const [show, setShow] = useState<Show | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const router = useRouter();
 
   async function loadShow() {
     try {
@@ -37,7 +40,7 @@ export default function ShowPage() {
         return;
       }
 
-      console.log("SHOW RECIBIDO:", data);
+      //console.log("SHOW RECIBIDO:", data);
 
       setShow(data.show);
 
@@ -168,6 +171,41 @@ export default function ShowPage() {
   alert("SetList guardado.");
 }
 
+async function exitShow() {
+  if (!show) return;
+
+  const confirmSave = window.confirm(
+    "¿Querés guardar los cambios antes de salir?"
+  );
+
+  if (confirmSave) {
+    const response = await fetch(
+      `/api/queSigue/show/${show.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: show.data,
+        }),
+      }
+    );
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      alert(result.error);
+      return;
+    }
+
+    alert("SetList guardado.");
+  }
+
+  //router.push(`/quesigue/component/dashboard?id_admin=${show.id_band}`);
+  router.back();
+}
+
   return (
     <main className="min-h-screen bg-base-200 p-6">
 
@@ -182,6 +220,7 @@ export default function ShowPage() {
             idBand={show.id_band}
             onAddSong={addSongToShow}
             onSave={saveShow}
+            onExit={exitShow}
         />
 
         <ShowItems

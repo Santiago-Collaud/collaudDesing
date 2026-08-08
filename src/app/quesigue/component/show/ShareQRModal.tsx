@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import QRCode from "react-qr-code";
-import { toPng } from "html-to-image";
 
 interface Props {
   open: boolean;
@@ -42,22 +41,155 @@ export default function ShareQRModal({
 
 
 
-  async function downloadQR() {
+ async function downloadQR() {
+  if (!qrRef.current) return;
 
-    if (!qrRef.current) return;
+  const svg = qrRef.current.querySelector("svg");
 
-    const dataUrl = await toPng(qrRef.current);
+  if (!svg) return;
 
-    const link = document.createElement("a");
+  const canvas = document.createElement("canvas");
 
-    link.download = "setlist-qr.png";
+  // Tamaño final de la imagen
+  const width = 600;
+  const height = 760;
 
-    link.href = dataUrl;
+  canvas.width = width;
+  canvas.height = height;
 
-    link.click();
+  const ctx = canvas.getContext("2d");
 
-  }
+  if (!ctx) return;
 
+  // Fondo blanco
+  ctx.fillStyle = "#c5c3c3";
+  ctx.fillRect(0, 0, width, height);
+
+  // Convertimos el SVG del QR en una imagen
+  const svgData = new XMLSerializer().serializeToString(svg);
+
+  const svgBlob = new Blob(
+    [svgData],
+    { type: "image/svg+xml;charset=utf-8" }
+  );
+
+  const svgUrl = URL.createObjectURL(svgBlob);
+
+  const qrImage = new Image();
+
+  qrImage.onload = () => {
+
+    // Tamaño del QR
+    const qrSize = 500;
+
+    // Centrar QR horizontalmente
+    const qrX = (width - qrSize) / 2;
+    const qrY = 40;
+
+    ctx.drawImage(
+      qrImage,
+      qrX,
+      qrY,
+      qrSize,
+      qrSize
+    );
+
+    URL.revokeObjectURL(svgUrl);
+
+    // Logo
+    const logo = new Image();
+
+    logo.onload = () => {
+
+      const logoSize = 70;
+
+      const logoX = (width - logoSize) / 2;
+      const logoY = 575;
+
+      ctx.drawImage(
+        logo,
+        logoX,
+        logoY,
+        logoSize,
+        logoSize
+      );
+
+      // Texto principal
+      ctx.fillStyle = "#111111";
+      ctx.textAlign = "center";
+
+      ctx.font = "bold 36px Arial";
+
+      ctx.fillText(
+        "queSigue",
+        width / 2,
+        680
+      );
+
+      // Texto secundario
+      ctx.font = "20px Arial";
+
+      ctx.fillText(
+        "Escaneá para abrir el SetList",
+        width / 2,
+        720
+      );
+
+      // Descargar
+      const link = document.createElement("a");
+
+      link.download = "setlist-qr.png";
+
+      link.href = canvas.toDataURL(
+        "image/png"
+      );
+
+      link.click();
+    };
+
+    logo.onerror = () => {
+      console.error("No se pudo cargar el logo.");
+
+      // Si falla el logo, igualmente descargamos el QR
+      ctx.fillStyle = "#111111";
+      ctx.textAlign = "center";
+      ctx.font = "bold 36px Arial";
+
+      ctx.fillText(
+        "queSigue",
+        width / 2,
+        680
+      );
+
+      ctx.font = "20px Arial";
+
+      ctx.fillText(
+        "Escaneá para abrir el SetList",
+        width / 2,
+        720
+      );
+
+      const link = document.createElement("a");
+
+      link.download = "setlist-qr.png";
+
+      link.href = canvas.toDataURL(
+        "image/png"
+      );
+
+      link.click();
+    };
+
+    logo.src = "/icon/queSigue/icons/queSigue-logo-192.png";
+  };
+
+  qrImage.onerror = () => {
+    URL.revokeObjectURL(svgUrl);
+    console.error("No se pudo generar la imagen del QR.");
+  };
+
+  qrImage.src = svgUrl;
+}
   return (
 
     <dialog className={`modal ${open ? "modal-open" : ""}`}>
@@ -72,17 +204,21 @@ export default function ShareQRModal({
 
         <div
           ref={qrRef}
-          className="bg-white p-5 rounded-lg mt-6 flex justify-center"
+          className="bg-white p-5 rounded-lg mt-6 flex justify-center items-center"
+          style={{
+            width: "290px",
+            height: "290px",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
         >
 
-          {
-            url &&
+          {url && (
             <QRCode
               value={url}
               size={250}
             />
-          }
-
+          )}
         </div>
 
         <p className="text-xs mt-4 break-all">

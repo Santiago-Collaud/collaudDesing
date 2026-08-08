@@ -11,7 +11,8 @@ interface ShowToolbarProps {
   idBand: string;
   showId: string;
   onAddSong: (song: SetListItem) => void;
-  onSave: () => void;
+  onSave: () => Promise<void>;
+  onExit: () => void;
 }
 
 
@@ -20,6 +21,7 @@ export default function ShowToolbar({
   showId,
   onAddSong,
   onSave,
+  onExit,
 }: ShowToolbarProps) {
 
 
@@ -62,23 +64,25 @@ export default function ShowToolbar({
 
     }
 
+    
+
+
   return (
     <>
 
       <div className="flex flex-wrap gap-3">
 
-
         <button
-          className="btn btn-primary"
+          className="btn btn-outline"
           onClick={() => setShowAddSong(true)}
         >
-          Agregar canción
+          Agregar item
         </button>
 
 
 
         <button
-          className="btn btn-primary"
+          className="btn btn-outline"
           onClick={() => setShowNewSong(true)}
         >
           Crear canción
@@ -90,7 +94,7 @@ export default function ShowToolbar({
           className="btn btn-outline"
           onClick={exportJson}
         >
-          Exportar JSON
+          Exportar Archivo
         </button>
 
 
@@ -105,13 +109,18 @@ export default function ShowToolbar({
 
 
         <button
-          className="btn btn-success"
+          className="btn btn-outline"
           onClick={onSave}
       >
           Guardar
       </button>
 
-
+        <button
+          className="btn btn-outline"
+          onClick={onExit}
+        >
+          Salir
+        </button>
       </div>
 
 
@@ -126,7 +135,7 @@ export default function ShowToolbar({
 
         onCreated={() => {
 
-          console.log("Canción creada");
+          //console.log("Canción creada");
 
           setShowNewSong(false);
 

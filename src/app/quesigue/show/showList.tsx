@@ -1,3 +1,4 @@
+//muestra los setlist creados por el admin, con la opcion de exportar el json, qr o aliminar.
 "use client";
 
 import { useEffect, useState } from "react";
@@ -5,6 +6,8 @@ import { useRouter } from "next/navigation";
 
 import ShareQRModal from "../component/show/ShareQRModal";
 import ShareJSON from "../component/show/ShareJSONModal";
+
+import {SquarePen, Trash2, QrCode , } from "lucide-react";
 
 interface Show {
   id: string;
@@ -157,16 +160,18 @@ export default function ShowList({
               </div>
 
               <div className="flex gap-2">
-
+                
                 <button
                   className="btn btn-xs btn-primary"
                   onClick={() =>
-                    router.push(`/dashboard/show/${show.id}`)
+                    router.push(`/quesigue/show/${show.id}`)
                   }
                 >
-                  Editar
-                </button>
-
+                  <SquarePen size={18} />
+                  {/*Editar*/}
+                </button>   
+                
+                
                 <button
                   className="btn btn-xs btn-outline"
                   onClick={() => {
@@ -174,7 +179,8 @@ export default function ShowList({
                     setShowQR(true);
                   }}
                 >
-                  QR
+                  <QrCode size={18} />
+                  {/*QR*/}
                 </button>
 
                 <ShareJSON
@@ -185,7 +191,8 @@ export default function ShowList({
                   className="btn btn-xs btn-error"
                   onClick={() => deleteShow(show.id)}
                 >
-                  Eliminar
+                  <Trash2 size={18} />
+                  {/*Eliminar*/}
                 </button>
 
               </div>

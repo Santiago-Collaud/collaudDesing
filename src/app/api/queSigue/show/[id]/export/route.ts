@@ -20,13 +20,13 @@ export async function GET(
 
   try {
 
-    const { data, error } = await supabaseQueSigue
+    const { data: show, error: showError } = await supabaseQueSigue
       .from("setlist-show")
       .select("*")
       .eq("id", id)
       .single();
 
-    if (error || !data) {
+    if (showError || !show) {
       return new Response(
         JSON.stringify({
           error: "SetList no encontrado.",
@@ -35,13 +35,30 @@ export async function GET(
       );
     }
 
+    const { data: band, error: bandError } = await supabaseQueSigue
+      .from("setlist-band")
+      .select("name")
+      .eq("id", show.id_band)
+      .single();
+
+    if (bandError || !band) {
+      return new Response(
+        JSON.stringify({
+          error: "Banda no encontrada.",
+        }),
+        { status: 404 }
+      );
+    }
+
     const file = {
       version: 1,
-      banda: data.band_name,
-      show: data.name,
-      fecha: data.date,
-      items: data.data?.items ?? [],
+      banda: band.name,
+      show: show.name,
+      fecha: show.date,
+      items: show.data?.items ?? [],
     };
+
+    //console.log(file);
 
     return new Response(
       JSON.stringify(file, null, 2),

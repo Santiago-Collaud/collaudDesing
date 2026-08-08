@@ -113,7 +113,46 @@ export default function AddSongModal({
 
           <ul className="space-y-2">
             
-            <details className="collapse collapse-arrow bg-base-200 mb-4">
+            {filteredSongs.map(song => (
+
+              <li
+                key={song.id}
+                className="border rounded-lg p-3 flex justify-between items-center"
+              >
+
+                <div>
+
+                  <p className="font-bold">
+                    {song.name}
+                  </p>
+
+                  <p className="text-sm opacity-60">
+                    {song.tone} • {song.duration}
+                  </p>
+
+                </div>
+
+                <button
+                  className="btn btn-primary btn-sm"
+                 onClick={() => {
+                    onAdd({
+                      tipo: "song",
+                      color: "default",
+                      nombre: song.name,
+                      tono: song.tone,
+                      nota: song.detail,
+                    });
+
+                    onClose();
+                  }}
+                >
+                  Agregar
+                </button>
+
+              </li>
+
+            ))}
+<details className="collapse collapse-arrow bg-base-200 mb-4">
 
               <summary className="collapse-title font-semibold">
                 Eventos
@@ -156,46 +195,6 @@ export default function AddSongModal({
               </div>
 
             </details>
-            {filteredSongs.map(song => (
-
-              <li
-                key={song.id}
-                className="border rounded-lg p-3 flex justify-between items-center"
-              >
-
-                <div>
-
-                  <p className="font-bold">
-                    {song.name}
-                  </p>
-
-                  <p className="text-sm opacity-60">
-                    {song.tone} • {song.duration}
-                  </p>
-
-                </div>
-
-                <button
-                  className="btn btn-primary btn-sm"
-                 onClick={() => {
-                    onAdd({
-                      tipo: "song",
-                      color: "default",
-                      nombre: song.name,
-                      tono: song.tone,
-                      nota: song.detail,
-                    });
-
-                    onClose();
-                  }}
-                >
-                  Agregar
-                </button>
-
-              </li>
-
-            ))}
-
           </ul>
 
         </div>

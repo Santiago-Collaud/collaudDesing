@@ -1,9 +1,6 @@
 "use client";
 
-
 import { useEffect, useState } from "react";
-
-
 
 interface Song {
 
@@ -16,8 +13,6 @@ interface Song {
 
 }
 
-
-
 interface EditSongModalProps {
 
   open:boolean;
@@ -26,9 +21,6 @@ interface EditSongModalProps {
   onUpdated:()=>void;
 
 }
-
-
-
 
 export default function EditSongModal({
 
@@ -52,9 +44,6 @@ export default function EditSongModal({
   const [error,setError] = useState("");
 
 
-
-
-
   useEffect(()=>{
 
     setName(song.name);
@@ -68,16 +57,10 @@ export default function EditSongModal({
   },[song]);
 
 
-
-
-
   async function updateSong(){
-
 
     setLoading(true);
     setError("");
-
-
 
     try{
 
@@ -108,8 +91,6 @@ export default function EditSongModal({
 
       const data = await response.json();
 
-
-
       if(!response.ok){
 
         setError(data.error);
@@ -117,12 +98,8 @@ export default function EditSongModal({
 
       }
 
-
-
       onUpdated();
       onClose();
-
-
 
     }catch(err){
 
@@ -138,77 +115,51 @@ export default function EditSongModal({
 
   }
 
-
-
-
-
   return (
 
-    <dialog className={`modal ${open ? "modal-open":""}`}>
-
+    <dialog className={`modal ${open ? "modal-open" : ""}`}>
       <div className="modal-box">
-
-
         <h3 className="font-bold text-lg">
           Editar canción
         </h3>
-
-
-
         <div className="mt-4 space-y-3">
-
-
           <input
             className="input input-bordered w-full"
             value={name}
-            onChange={(e)=>setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Nombre de la canción"
           />
-
-
           <input
             className="input input-bordered w-full"
             value={tone}
-            onChange={(e)=>setTone(e.target.value)}
+            onChange={(e) => setTone(e.target.value)}
+            placeholder="Tono de la canción"
           />
-
-
           <input
             className="input input-bordered w-full"
             value={duration}
-            onChange={(e)=>setDuration(e.target.value)}
+            onChange={(e) => setDuration(e.target.value)}
+            placeholder="Duración de la canción"
           />
-
-
-
           <textarea
             className="textarea textarea-bordered w-full"
             value={detail}
-            onChange={(e)=>setDetail(e.target.value)}
+            onChange={(e) => setDetail(e.target.value)}
+            placeholder="Detalle de la canción"
           />
-
-
-
           <div className="flex items-center gap-3">
-
 
             <span>
               Activa
             </span>
 
-
             <input
               type="checkbox"
               className="toggle toggle-success"
               checked={isActive}
-              onChange={(e)=>setIsActive(e.target.checked)}
+              onChange={(e) => setIsActive(e.target.checked)}
             />
-
-
           </div>
-
-
-
-
           {
             error && (
               <p className="text-error">
@@ -216,16 +167,8 @@ export default function EditSongModal({
               </p>
             )
           }
-
-
         </div>
-
-
-
-
         <div className="modal-action">
-
-
           <button
             className="btn"
             onClick={onClose}
@@ -233,9 +176,6 @@ export default function EditSongModal({
           >
             Cancelar
           </button>
-
-
-
           <button
             className="btn btn-primary"
             onClick={updateSong}
@@ -243,22 +183,12 @@ export default function EditSongModal({
           >
             {
               loading
-              ? "Guardando..."
-              : "Guardar"
+                ? "Guardando..."
+                : "Guardar"
             }
           </button>
-
-
         </div>
-
-
-
       </div>
-
-
     </dialog>
-
   );
-
-
 }

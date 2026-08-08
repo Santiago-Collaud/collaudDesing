@@ -1,10 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { SetListItem } from "../../../../../lib/queSigue/types";
 import NewSongModal from "./newSongModal";
 import EditSongModal from "./EditSongModal";
 
+import {SquarePen, Trash2 } from "lucide-react";
+
+interface Band {
+  id: string;
+  name: string;
+  active: string;
+}
 
 interface Song {
   id: string;
@@ -15,23 +21,25 @@ interface Song {
   active: string;
 }
 
-
 interface SongListProps {
-  idBand: string;
+  idAdmin: string;
   refresh?: number;
 }
 
-
 export default function SongList({
-  idBand,
+  idAdmin,
   refresh = 0,
 }: SongListProps) {
 
+  const [bands, setBands] = useState<Band[]>([]);
+  const [selectedBandId, setSelectedBandId] = useState("");
 
   const [songs, setSongs] = useState<Song[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
+  const [loadingBands, setLoadingBands] = useState(true);
+  const [loadingSongs, setLoadingSongs] = useState(false);
+
+  const [error, setError] = useState("");
 
   const [showNew, setShowNew] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -39,64 +47,161 @@ export default function SongList({
   const [selectedSong, setSelectedSong] = useState<Song | null>(null);
 
 
+  // --------------------------------
+  // CARGAR BANDAS DEL USUARIO
+  // --------------------------------
 
-  async function loadSongs() {
+  async function loadBands() {
 
-    setLoading(true);
+    setLoadingBands(true);
     setError("");
 
     try {
 
       const response = await fetch(
-        `/api/queSigue/song/list?id_band=${idBand}`
+        `/api/queSigue/band/list?id_admin=${idAdmin}`
       );
-
 
       const data = await response.json();
 
-
-      if(!response.ok){
-
+      if (!response.ok) {
         setError(data.error);
         return;
-
       }
 
-      console.log("songList",data.songs);
-      setSongs(data.songs);
+      setBands(data.bands);
 
-
-    } catch(err){
+    } catch (err) {
 
       console.error(err);
+
       setError("Error de conexión.");
 
     } finally {
 
-      setLoading(false);
+      setLoadingBands(false);
 
     }
-
   }
 
 
+  // --------------------------------
+  // CARGAR CANCIONES DE LA BANDA
+  // --------------------------------
+
+  async function loadSongs() {
+
+    if (!selectedBandId) {
+      setSongs([]);
+      return;
+    }
+
+    setLoadingSongs(true);
+    setError("");
+
+    try {
+
+      const response = await fetch(
+        `/api/queSigue/song/list?id_band=${selectedBandId}`
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error);
+        return;
+      }
+
+      setSongs(data.songs);
+
+    } catch (err) {
+
+      console.error(err);
+
+      setError("Error de conexión.");
+
+    } finally {
+
+      setLoadingSongs(false);
+
+    }
+  }
+
+
+  // --------------------------------
+  // CARGAR BANDAS AL ENTRAR
+  // --------------------------------
+
+  useEffect(() => {
+
+    loadBands();
+
+  }, [idAdmin, refresh]);
+
+
+  // --------------------------------
+  // CARGAR CANCIONES AL CAMBIAR BANDA
+  // --------------------------------
 
   useEffect(() => {
 
     loadSongs();
 
-  }, [refresh]);
+  }, [selectedBandId]);
 
 
+  // --------------------------------
+  // RENDER
+  // --------------------------------
 
-  if(loading){
+  if (loadingBands) {
 
-    return <p>Cargando canciones...</p>;
+    return (
+      <p>
+        Cargando bandas...
+      </p>
+    );
 
   }
 
+  async function deleteSong(song: Song) {
 
-  if(error){
+    const confirmDelete = window.confirm(
+      `¿Estás seguro de eliminar la canción "${song.name}"?`
+    );
+
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+
+      const response = await fetch(
+        `/api/queSigue/song/${song.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.error);
+        return;
+      }
+
+      await loadSongs();
+
+    } catch (err) {
+
+      console.error(err);
+
+      alert("Error de conexión.");
+
+    }
+  }
+
+  if (error) {
 
     return (
       <p className="text-error">
@@ -107,117 +212,176 @@ export default function SongList({
   }
 
 
-
   return (
 
     <div>
 
+      {/* SELECTOR DE BANDA */}
 
-      <div className="flex justify-between mb-4">
+      <div className="flex flex-wrap justify-between items-center gap-4 mb-6">
 
-        <h2 className="text-xl font-bold">
-          Canciones
-        </h2>
-
-
-        <button
-          className="btn btn-primary btn-sm"
-          onClick={() => setShowNew(true)}
+        <select
+          className="select select-bordered w-full max-w-md"
+          value={selectedBandId}
+          onChange={(e) => setSelectedBandId(e.target.value)}
         >
-          Nueva canción
-        </button>
 
+          <option value="">
+            Seleccioná una banda
+          </option>
+
+          {bands.map((band) => (
+
+            <option
+              key={band.id}
+              value={band.id}
+            >
+              {band.name}
+            </option>
+
+          ))}
+
+        </select>
+
+
+        {selectedBandId && (
+
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => setShowNew(true)}
+          >
+            + Nueva canción
+          </button>
+
+        )}
 
       </div>
 
 
+      {/* CANCIONES */}
 
-      {
-        songs.length === 0 ? (
+      {!selectedBandId ? (
 
-          <p className="opacity-60">
-            No hay canciones.
-          </p>
+        <p className="opacity-60">
+          Seleccioná una banda para ver sus canciones.
+        </p>
 
-        ) : (
+      ) : loadingSongs ? (
 
-          <ul className="space-y-2">
+        <p>
+          Cargando canciones...
+        </p>
 
-            {
-              songs.map(song => (
+      ) : songs.length === 0 ? (
 
-                <li
-                  key={song.id}
-                  className="border rounded-lg p-3 flex justify-between"
+        <p className="opacity-60">
+          No hay canciones.
+        </p>
+
+      ) : (
+
+        <ul className="space-y-2">
+
+          {songs.map((song) => (
+
+            <li
+              key={song.id}
+              className="border rounded-lg p-3 flex justify-between items-center"
+            >
+
+              <div>
+
+                <p className="font-bold">
+                  {song.name}
+                </p>
+
+                <p className="text-sm opacity-60">
+                  {song.tone} · {song.duration}
+                </p>
+
+                <p className="text-sm opacity-60">
+                  {song.detail}
+                </p>
+<span
+              className={`text-xs ${
+                song.active === "ACTIVE"
+                  ? "text-success"
+                  : "text-error"
+              }`}
+            >
+              {song.active === "ACTIVE" ? "Activa" : "Inactiva"}
+            </span>
+              </div>
+
+            <div className="flex gap-2">
+              <button
+                className="btn btn-xs btn-primary"
+                onClick={() => {
+
+                  setSelectedSong(song);
+                  setShowEdit(true);
+
+                }}
+              >
+                <SquarePen size={18} />
+                {/*Editar*/}
+              </button>
+
+               <button
+                  className="btn btn-xs btn-error"
+                  onClick={() => deleteSong(song)}
                 >
+                  <Trash2 size={18} />
+                  {/*Eliminar*/}
+                </button>
+              </div>
+            </li>
 
-                  <div>
+          ))}
 
-                    <p className="font-bold">
-                      {song.name}
-                    </p>
+        </ul>
 
-                    <p className="text-sm opacity-60">
-                      {song.tone} · {song.duration}
-                    </p>
-
-                  </div>
-
-
-                  <button
-                    className="btn btn-xs btn-primary"
-                    onClick={() => {
-                      setSelectedSong(song);
-                      setShowEdit(true);
-                    }}
-                  >
-                    Editar
-                  </button>
+      )}
 
 
-                </li>
+      {/* NUEVA CANCIÓN */}
 
-              ))
-            }
+      {selectedBandId && (
 
-          </ul>
+        <NewSongModal
+          open={showNew}
+          idBand={selectedBandId}
+          onClose={() => setShowNew(false)}
+          onCreated={() => {
 
-        )
-      }
+            setShowNew(false);
+            loadSongs();
 
+          }}
+        />
 
-
-      <NewSongModal
-        open={showNew}
-        idBand={idBand}
-        onClose={() => setShowNew(false)}
-        onCreated={() => {
-          setShowNew(false);
-          loadSongs();
-        }}
-      />
+      )}
 
 
+      {/* EDITAR CANCIÓN */}
 
-      {
-        selectedSong && (
+      {selectedSong && (
 
-          <EditSongModal
-            open={showEdit}
-            song={selectedSong}
-            onClose={() => setShowEdit(false)}
-            onUpdated={() => {
-              setShowEdit(false);
-              loadSongs();
-            }}
-          />
+        <EditSongModal
+          open={showEdit}
+          song={selectedSong}
+          onClose={() => setShowEdit(false)}
+          onUpdated={() => {
 
-        )
-      }
+            setShowEdit(false);
+            loadSongs();
 
+          }}
+        />
+
+      )}
 
     </div>
 
   );
-
 }
