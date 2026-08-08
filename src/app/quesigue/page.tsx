@@ -1,7 +1,7 @@
 //PAGINA SUITE DE SET LIST CREATOR
 "use client";
 
-import { useState } from "react";
+import { useState ,useEffect } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import Dashboard from "./component/dashboard";
 
@@ -50,6 +50,9 @@ export default function SoftwarePage() {
 
   const [forgotLoading, setForgotLoading] = useState(false);
   const [forgotError, setForgotError] = useState("");
+
+  //auth/me
+  const [checkingSession, setCheckingSession] = useState(true);
 
   //LOGUIN
    async function login() {
@@ -322,13 +325,59 @@ export default function SoftwarePage() {
     }
   }
 
+  async function logout() {
+  try {
+    await fetch("/api/queSigue/auth/logout", {
+      method: "POST",
+    });
+  } catch (error) {
+    console.error("Error cerrando sesión:", error);
+  } finally {
+    setUser(null);
+  }
+}
+
+  //revisa si hay sesión activa al cargar la página
+  useEffect(() => {
+  async function checkSession() {
+    try {
+      const response = await fetch("/api/queSigue/auth/me");
+
+      if (!response.ok) {
+        setUser(null);
+        return;
+      }
+
+      const data = await response.json();
+
+      setUser(data.user);
+
+    } catch (error) {
+      console.error("Error verificando sesión:", error);
+      setUser(null);
+
+    } finally {
+      setCheckingSession(false);
+    }
+  }
+
+  checkSession();
+}, []);
+
+if (checkingSession) {
+  return (
+    <main className="min-h-screen flex items-center justify-center bg-base-200">
+      <span className="loading loading-spinner loading-lg"></span>
+    </main>
+  );
+}
 
   if (user) {
   return (
     <Dashboard
       username={user.username}
       idAdmin={user.id}
-      onLogout={() => setUser(null)}
+      onLogout={logout}
     />
   );
 }

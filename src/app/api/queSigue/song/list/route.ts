@@ -37,8 +37,8 @@ export async function GET(req: Request) {
 
 
 
-    console.log("SONG LIST DATA:", data);
-    console.log("SONG LIST ERROR:", error);
+    //console.log("SONG LIST DATA:", data);
+    //console.log("SONG LIST ERROR:", error);
 
 
 

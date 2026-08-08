@@ -1,4 +1,5 @@
 "use client";
+import {Braces, } from "lucide-react";
 
 interface ExportJsonProps {
   showId: string;
@@ -46,7 +47,8 @@ export default function ShareJSON({
       className="btn btn-xs btn-outline"
       onClick={exportJson}
     >
-      JSON
+      <Braces size={18} />
+      {/*JSON*/}
     </button>
   );
 

@@ -4,9 +4,14 @@ import { useEffect, useState } from "react";
 import EditBandModal from "./EditBandModal";
 import NewShowModal from "../show/NewShowModal";
 
+import {
+  SquarePen,
+  Trash2,
+} from "lucide-react";
+
 
 interface Band {
-  id: string;
+  id: string;  
   name: string;
   active: string;
 }
@@ -57,6 +62,43 @@ export default function BandList({
     }
   }
 
+  async function deleteBand(band: Band) {
+  const confirmed = window.confirm(
+    `¿Estás seguro de eliminar la banda "${band.name}"?\n\n` +
+    "La banda dejará de aparecer en tu lista, " +
+    "pero sus canciones y SetLists se conservarán."+
+    "\n\n Para reactivarla, contactese con el administrador de la pagina."
+  );
+
+  if (!confirmed) return;
+
+  try {
+    const response = await fetch(
+      `/api/queSigue/band/${band.id}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.error);
+      return;
+    }
+
+    // La quitamos inmediatamente de la pantalla
+    setBands((prev) =>
+      prev.filter((item) => item.id !== band.id)
+    );
+
+  } catch (error) {
+    console.error("Error eliminando banda:", error);
+
+    alert("Error de conexión.");
+  }
+}
+
   useEffect(() => {
     loadBands();
   }, [refresh]);
@@ -88,24 +130,28 @@ export default function BandList({
           key={band.id}
           className="border rounded-lg p-3 flex justify-between items-center"
         >
+          <div>
+            <p className="font-semibold">
+              {band.name}
+            </p>
 
-          <span>{band.name}</span>
-
+            <span
+              className={`text-xs ${
+                band.active === "ACTIVE"
+                  ? "text-success"
+                  : "text-error"
+              }`}
+            >
+              {band.active === "ACTIVE" ? "Activa" : "Inactiva"}
+            </span>
+          </div>
+          
+          
           <div className="flex gap-2">
 
             <button
-              className="btn btn-xs btn-primary"
-              onClick={() => {
-                setSelectedBand(band);
-                setShowEdit(true);
-              }}
-            >
-              Editar
-            </button>
-
-
-            <button
               className="btn btn-xs btn-secondary"
+              disabled={band.active !== "ACTIVE"}
               onClick={() => {
                 setSelectedBandForShow(band);
                 setShowNewShow(true);
@@ -113,11 +159,28 @@ export default function BandList({
             >
               Crear SetList
             </button>
+            
+            <button
+              className="btn btn-xs btn-primary"
+              onClick={() => {
+                setSelectedBand(band);
+                setShowEdit(true);
+              }}
+            >
+              <SquarePen size={18} />
+              {/*Editar*/}
+            </button>
+
+            <button
+              className="btn btn-xs btn-error"
+              onClick={() => deleteBand(band)}
+            >
+              <Trash2 size={18} />
+              {/*Eliminar*/}
+            </button>
 
           </div>
-
         </li>
-
       ))}
 
     </ul>

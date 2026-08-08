@@ -53,9 +53,9 @@ export default function NewShowModal({
       return;
     }
 
-    console.log("SetList creado:", data);
+    //console.log("SetList creado:", data);
 
-    router.push(`/queSigue/show/${data.id}`);
+    router.push(`/quesigue/show/${data.id}`);
 
   } catch (err) {
     console.error(err);

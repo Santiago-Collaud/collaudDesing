@@ -44,8 +44,8 @@ export async function POST(req: Request) {
       .single();
 
 
-    console.log("SONG CREATE DATA:", data);
-    console.log("SONG CREATE ERROR:", error);
+    //console.log("SONG CREATE DATA:", data);
+    //console.log("SONG CREATE ERROR:", error);
 
 
     if (error) {
