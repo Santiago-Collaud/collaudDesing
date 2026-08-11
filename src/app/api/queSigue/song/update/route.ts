@@ -47,8 +47,8 @@ export async function PATCH(req: Request) {
 
 
 
-    console.log("SONG UPDATE DATA:", data);
-    console.log("SONG UPDATE ERROR:", error);
+    //console.log("SONG UPDATE DATA:", data);
+    //console.log("SONG UPDATE ERROR:", error);
 
 
 
