@@ -75,7 +75,7 @@ export async function GET(
 
 }
 
-
+//actualiza el data del setlist, incluyendo la version actual + 1
 export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -92,7 +92,6 @@ export async function PUT(
   }
 
   const body = await req.json();
-
   const { data } = body;
 
   if (!data) {
@@ -106,14 +105,46 @@ export async function PUT(
 
   try {
 
+    // 1. Obtener la versión actual guardada en DB
+    const { data: currentShow, error: currentError } =
+      await supabaseQueSigue
+        .from("setlist-show")
+        .select("data")
+        .eq("id", id)
+        .single();
+
+    if (currentError) {
+      console.error(currentError);
+
+      return new Response(
+        JSON.stringify({
+          error: "No se pudo obtener la versión actual.",
+        }),
+        { status: 500 }
+      );
+    }
+
+    // 2. Obtener versión actual
+    const currentVersion =
+      currentShow?.data?.version ?? 1;
+
+    // 3. Crear el nuevo objeto data
+    const newData = {
+      ...data,
+      version: currentVersion + 1,
+    };
+
+    // 4. Guardar
     const { error } = await supabaseQueSigue
       .from("setlist-show")
       .update({
-        data,
+        data: newData,
       })
       .eq("id", id);
 
     if (error) {
+      console.error(error);
+
       return new Response(
         JSON.stringify({
           error: "No se pudo guardar.",
@@ -125,6 +156,7 @@ export async function PUT(
     return new Response(
       JSON.stringify({
         ok: true,
+        version: newData.version,
       }),
       { status: 200 }
     );
@@ -139,7 +171,6 @@ export async function PUT(
       }),
       { status: 500 }
     );
-
   }
 }
 
