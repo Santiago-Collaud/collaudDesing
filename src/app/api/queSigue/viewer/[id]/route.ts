@@ -73,7 +73,7 @@ export async function GET(
 
 
     const file = {
-      version: 1,
+      version: show.data?.version ?? 1,
       banda: band.name,
       show: show.name,
       fecha: show.date,
