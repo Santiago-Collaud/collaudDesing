@@ -4,7 +4,7 @@ import { sendGAEvent } from '@next/third-parties/google'
 export default function Turnit() {
     return (
         <div>
-            <article className="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-xs ">
+            <article className="flex h-full flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm">
                 <img alt="" src="/icon/turnit-icon-512.png" 
                 className="h-56 w-full object-cover" />
 

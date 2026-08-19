@@ -5,6 +5,7 @@ import type { SetListItem } from "../../../../../lib/queSigue/types";
 import NewSongModal from "../song/newSongModal";
 import AddSongModal from "../song/addItemsModal";
 import ShareQRModal from "./ShareQRModal";
+import SharePDF from "./downloadPdf";
 
 
 interface ShowToolbarProps {
@@ -106,7 +107,7 @@ export default function ShowToolbar({
           Generar QR
         </button>
 
-
+        <SharePDF showId={showId} />
 
         <button
           className="btn btn-outline"

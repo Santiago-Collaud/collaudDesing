@@ -39,6 +39,7 @@ export default function ShareJSON({
     a.click();
 
     URL.revokeObjectURL(url);
+    
 
   }
 
