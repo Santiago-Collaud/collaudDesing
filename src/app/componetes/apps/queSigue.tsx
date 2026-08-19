@@ -1,33 +1,30 @@
 "use client"
 import { sendGAEvent } from '@next/third-parties/google'
 
-export default function PPT() {
+export default function QueSigueViewer() {
     return (
         <div>
             <article className="flex h-full flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm">
-                <img alt="" src="/icon/PPT_icon.jpg" 
+                <img alt="" src="/icon/queSigue/icons/queSigue-logo-192.png" 
                 className="h-56 w-full object-cover" />
 
                 <div className="p-4 sm:p-6">
                     
                     <h3 className="text-lg font-medium text-gray-900">
-                            Jugamos?
+                    Las listas de temas en la palma de tu mano
+                    </h3>
+
+                    <h3 className="text-lg font-medium text-gray-900">
+                    Que Sigue visor
                     </h3>
 
                     <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
-                        Clasico de clasicos. <br />
-                        Piedra, papel o tijera. <br />
-                        El juego que ha entretenido a generaciones. <br />
-                        ¿Quién ganará esta vez? <br />
-                        
+                        QueSigue es la aplicación que te permite crear y gestionar listas de temas de manera sencilla y eficiente. <br />
+                        Con nuestra plataforma intuitiva, podrás organizar tus ideas, tareas y proyectos en un solo lugar, 
                     </p>
-                    
-                    <strong className="text-lg font-bold text-red-500 border-t border-b border-gray-600 mt-4 block">
-                        DISPONIBLE UNICAMENTE PARA ANDROID
-                    </strong>
 
                     <a 
-                        href="https://github.com/Santiago-Collaud/piedra-papel-tijera/releases/download/v1.0.0/PPT-app.apk" 
+                        href="https://quesigue.vercel.app/" 
                         target="_blank"
                         rel="noopener noreferrer"
                         className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600 ml-4"
