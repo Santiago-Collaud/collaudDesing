@@ -70,7 +70,7 @@ export default function ClienteEventosPage() {
 
       {cliente.eventos.length === 0 && <p>Este cliente no tiene eventos.</p>}
 
-      <div className="grid grid-cols-2 gap-4 border-t pt-4 mt-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cliente.eventos.map((ev) => (
                 <EventoCard key={ev.id} evento={ev}/>
               ))}  

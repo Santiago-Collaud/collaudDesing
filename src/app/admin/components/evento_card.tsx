@@ -87,67 +87,101 @@ export default function EventoCard({ evento }: { evento: Evento }) {
 };
   
   return (
-    <div className="card bg-base-100 w-96 shadow-sm m-4">
-      <h2 className="card-title justify-center border-b-5 text-xl font-bold mb-4 mt-4 uppercase"> {evento.tituloEvento}</h2>
-      <button 
-      onClick={() => setShowEditModal(true)}
-      className="btn btn-soft">editar evento</button>
-          <figure>
-              <img
-                src={evento.preview_url}
-                alt="preview"
-                style={{ width: 200, borderRadius: 6, marginBottom: 10 }} 
-                className="m-4"
-              />
-          </figure>
-        <div className="card-body"> 
-          <h1>Comentario</h1>
-          <h2 className="border rounded-lg m-4 text-center">{evento.comentario || "—"}</h2>
-          <div className="card-actions">
-            <div className="border p-4 rounded-lg w-full">
-              {evento.link_drive && (
-                <p>
-                  Drive:{" "}
-                  <a href={evento.link_drive} target="_blank">
-                    <button className="btn btn-primary">Ver archivo</button>
-                  </a>
-                </p>
-              )}
-                {evento.link_supa && (
-                  <p>
-                    Archivo Supa:{" "}
-                    <a href={evento.link_supa} target="_blank">
-                      Descargar
-                    </a>
-                  </p>
-                )}
-              </div>
-            </div>
-            <p>
-              Estado:{" "}
-              <strong style={{ color: evento.active ? "green" : "red" }}>
-                {evento.active ? "Activo" : "Inactivo"}
-              </strong>
-            </p>
-            <h2>Precio: ${evento.precio || "0"}</h2>
-            <p>
-              Estado de pago:{" "}
-              <strong
-                style={{
-                  color:
-                    evento.estado_pago === "pagado"
-                      ? "green"
-                      : evento.estado_pago === "impago"
-                      ? "red"
-                      : "orange",
-                }}
-              >
-                {evento.estado_pago}
-              </strong>
-            </p>
+  <div className="card w-full min-w-0 max-w-full bg-base-100 shadow-sm">
+    <h2 className="card-title mt-4 mb-4 justify-center border-b text-center text-lg sm:text-xl font-bold uppercase break-words px-3">
+      {evento.tituloEvento}
+    </h2>
 
-            <p>Fecha: {new Date(evento.created_at).toLocaleString()}</p>  
+    <div className="px-4">
+      <button
+        onClick={() => setShowEditModal(true)}
+        className="btn btn-soft w-full"
+      >
+        Editar evento
+      </button>
+    </div>
+
+    {evento.preview_url && (
+      <figure className="px-4 pt-4">
+        <img
+          src={evento.preview_url}
+          alt="Preview"
+          className="h-auto w-full max-w-[200px] rounded-md object-contain"
+        />
+      </figure>
+    )}
+
+    <div className="card-body min-w-0 gap-3 p-4">
+      <h3 className="font-semibold">Comentario</h3>
+
+      <p className="w-full min-w-0 break-words rounded-lg border p-3 text-center whitespace-pre-wrap">
+        {evento.comentario || "—"}
+      </p>
+
+      <div className="card-actions w-full min-w-0">
+        <div className="w-full min-w-0 space-y-3 rounded-lg border p-3">
+          {evento.link_drive && (
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <span>Drive</span>
+              <a
+                href={evento.link_drive}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary w-full sm:w-auto"
+              >
+                Ver archivo
+              </a>
+            </div>
+          )}
+
+          {evento.link_supa && (
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <span>Archivo Supa</span>
+              <a
+                href={evento.link_supa}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline w-full sm:w-auto"
+              >
+                Descargar
+              </a>
+            </div>
+          )}
         </div>
+      </div>
+
+      <p className="break-words">
+        Estado:{" "}
+        <strong className={evento.active ? "text-green-600" : "text-red-600"}>
+          {evento.active ? "Activo" : "Inactivo"}
+        </strong>
+      </p>
+
+      <p className="break-words">
+        Precio: <strong>${evento.precio || "0"}</strong>
+      </p>
+
+      <p className="break-words">
+        Estado de pago:{" "}
+        <strong
+          className={
+            evento.estado_pago === "pagado"
+              ? "text-green-600"
+              : evento.estado_pago === "impago"
+                ? "text-red-600"
+                : "text-orange-500"
+          }
+        >
+          {evento.estado_pago}
+        </strong>
+      </p>
+
+      <p className="break-words text-sm">
+        Fecha: {new Date(evento.created_at).toLocaleString()}
+      </p>
+    </div>
+ 
+
       
       {/* Modal */}
       {showEditModal && (
