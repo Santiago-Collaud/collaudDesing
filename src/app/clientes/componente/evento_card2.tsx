@@ -11,22 +11,23 @@ export default function EventoCard2({ evento }: { evento: Evento }) {
   const { crearPago, loading } = useCrearPago();
   
   return (
-    <div className="card w-100 h-80 shadow-sm">
-        <div className="bg-white grid sm:grid-cols-2 items-center border border-gray-200 shadow-md w-full max-w-2xl max-sm:max-w-sm rounded-lg overflow-hidden mx-auto mt-4  overflow-y-scroll">
-        <div className="min-h-[280px] h-full hover:scale-105 transition-transform duration-500 ease-in-out overflow-hidden">
-          <img 
-            src={evento.preview_url} 
-            className="w-full h-full object-cover" 
-            alt="preview"/>
-        </div>
-
-        <div className="p-6">
-          <h3 className="text-xl font-semibold text-slate-900">{evento.tituloEvento}</h3>
-          <p className="mt-3 text-sm text-slate-500 leading-relaxed">
-            {evento.comentario || "No hay comentario."}
-          </p>
+    <div className="card w-full min-w-0 max-w-full shadow-sm">
+        <div className="bg-white items-center border border-gray-200 shadow-md w-full max-w-2xl  rounded-lg overflow-hidden mx-auto mt-4  overflow-y-scroll">
           
+          <h3 className="text-xl font-semibold text-slate-900 mb-4">{evento.tituloEvento}</h3>
 
+          <div className="grid sm:grid-cols-2">
+            <div className="w-full aspect-video overflow-hidden rounded-lg hover:scale-105 transition-transform duration-500 ease-in-out">
+              <img 
+                src={evento.preview_url} 
+                className="w-full h-full object-cover" 
+                alt="preview"/>
+            </div>
+          <div className="ml-4 mb-3">
+            <p className="text-sm text-slate-500 leading-relaxed">
+              {evento.comentario || "No hay comentario."}
+            </p>
+          
           {evento.estado_pago == "impago" && (
           <div className="flex flex-wrap items-center cursor-pointer w-full mt-4 gap-4 mb-4">
             <h1 className="text-black">EVENTO IMPAGO</h1> 
@@ -84,6 +85,10 @@ export default function EventoCard2({ evento }: { evento: Evento }) {
         </div>
       </div>
 
+          </div>
+          
+
+        
       {/* Modal de Preview */}
         {modalPreview && (
           <div
