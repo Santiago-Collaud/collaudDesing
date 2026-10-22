@@ -49,7 +49,7 @@ export default function Page() {
               <p>No hay eventos disponibles.</p>
             )}
 
-            <div className="grid grid-cols-3 gap-4 max-sm:grid-cols-1 ">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {eventos.map((evento) => (
                 <motion.div
                   key={evento.id}
