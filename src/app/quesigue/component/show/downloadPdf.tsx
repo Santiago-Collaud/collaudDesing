@@ -171,8 +171,7 @@ export default function SharePDF({
         margin,
         y
       );
-
-      y += 12;
+      y += 5;
 
       /*
        * LÍNEA
@@ -226,205 +225,173 @@ export default function SharePDF({
             return [235, 235, 235];
         }
       }
+    /*
+    * ITEMS
+    */
+
+    const itemStartX = margin + 12;
+    const itemRightLimit = pageWidth - margin;
+    const itemWidth = itemRightLimit - itemStartX;
+
+    const rowHeight = 10;
+    const noteLineHeight = 4.5;
+    const noteGap = 2;
+    const textPadding = 3;
+    const boxHeight = 7;
+
+    data.items.forEach((item, index) => {
+      const number = String(index + 1).padStart(2, "0");
+      const color = getColor(item.color);
+      const nameX = itemStartX;
 
       /*
-       * ITEMS
-       */
+      * NOMBRE: UNA SOLA LÍNEA
+      */
 
-      data.items.forEach(
-        (item, index) => {
+      pdf.setFont("helvetica", "bold");
 
-          const itemHeight =
-            item.nota
-              ? 15
-              : 10;
+      let nameFontSize = 11;
+      pdf.setFontSize(nameFontSize);
 
-          /*
-           * NUEVA PÁGINA
-           */
+      // El nombre dispone del ancho de la fila, dejando espacio
+      // para los metadatos cuando sea posible.
+      const preferredNameWidth = Math.max(30, itemWidth * 0.65);
 
-          if (
-            y + itemHeight >
-            pageHeight - margin
-          ) {
+      while (
+        pdf.getTextWidth(item.nombre) + textPadding * 2 >
+          preferredNameWidth &&
+        nameFontSize > 6
+      ) {
+        nameFontSize -= 0.5;
+        pdf.setFontSize(nameFontSize);
+      }
 
-            pdf.addPage();
+      // Si todavía no entra, seguir reduciendo hasta el mínimo.
+      const maxNameWidth = itemWidth - textPadding * 2;
 
-            y = margin;
-          }
+      while (
+        pdf.getTextWidth(item.nombre) > maxNameWidth &&
+        nameFontSize > 4
+      ) {
+        nameFontSize -= 0.5;
+        pdf.setFontSize(nameFontSize);
+      }
 
-          /*
-           * NÚMERO
-           */
+      const finalBoxWidth =
+        pdf.getTextWidth(item.nombre) + textPadding * 2;
 
-          const number =
-            String(index + 1)
-              .padStart(2, "0");
+      /*
+      * NOTA: CALCULAR ANTES DE DIBUJAR
+      */
 
-          pdf.setFont(
-            "helvetica",
-            "bold"
-          );
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(9);
 
-          pdf.setFontSize(11);
+      const noteLines = item.nota
+        ? pdf.splitTextToSize(item.nota, itemWidth)
+        : [];
 
-          pdf.setTextColor(
-            80,
-            80,
-            80
-          );
+      const noteHeight = noteLines.length * noteLineHeight;
 
-          pdf.text(
-            number,
-            margin,
-            y
-          );
+      const itemHeight =
+        rowHeight +
+        (noteLines.length > 0 ? noteGap + noteHeight : 0);
 
-          /*
-           * NOMBRE
-           */
+      /*
+      * SALTO DE PÁGINA
+      */
 
-          const nameX =
-            margin + 12;
+      if (y + itemHeight > pageHeight - margin) {
+        pdf.addPage();
+        y = margin;
+      }
 
-          const color =
-            getColor(item.color);
+      /*
+      * NÚMERO
+      */
 
-          pdf.setFont(
-            "helvetica",
-            "bold"
-          );
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(11);
+      pdf.setTextColor(80, 80, 80);
 
-          pdf.setFontSize(11);
+      pdf.text(number, margin, y);
 
-          const textWidth =
-            pdf.getTextWidth(
-              item.nombre
-            );
+      /*
+      * RECUADRO Y NOMBRE
+      */
 
-          const paddingX = 3;
+      pdf.setDrawColor(color[0], color[1], color[2]);
+      pdf.setLineWidth(0.6);
 
-          const boxWidth =
-            textWidth +
-            paddingX * 2;
-
-          const boxHeight = 7;
-
-          /*
-           * BORDE
-           */
-
-          pdf.setDrawColor(
-            color[0],
-            color[1],
-            color[2]
-          );
-
-          pdf.setLineWidth(0.6);
-
-          pdf.roundedRect(
-            nameX,
-            y - 5,
-            boxWidth,
-            boxHeight,
-            1.5,
-            1.5
-          );
-
-          /*
-           * NOMBRE
-           */
-
-          pdf.setTextColor(
-            30,
-            30,
-            30
-          );
-
-          pdf.text(
-            item.nombre,
-            nameX + paddingX,
-            y
-          );
-
-          /*
-           * METADATOS
-           */
-
-          let metadataX =
-            nameX +
-            boxWidth +
-            8;
-
-          pdf.setFont(
-            "helvetica",
-            "normal"
-          );
-
-          pdf.setFontSize(10);
-
-          pdf.setTextColor(
-            80,
-            80,
-            80
-          );
-
-          /*
-           * TONO
-           */
-
-          if (item.tono) {
-
-            pdf.text(
-              item.tono,
-              metadataX,
-              y
-            );
-
-            metadataX += 18;
-          }
-
-          /*
-           * TEMPO
-           */
-
-          if (item.tempo) {
-
-            pdf.text(
-              `${item.tempo} BPM`,
-              metadataX,
-              y
-            );
-
-            metadataX += 25;
-          }
-
-          /*
-           * NOTA
-           */
-
-          if (item.nota) {
-
-            pdf.setFontSize(9);
-
-            pdf.setTextColor(
-              100,
-              100,
-              100
-            );
-
-            pdf.text(
-              item.nota,
-              nameX,
-              y + 7
-            );
-
-            y += 5;
-          }
-
-          y += 10;
-        }
+      pdf.roundedRect(
+        nameX,
+        y - 5,
+        finalBoxWidth,
+        boxHeight,
+        1.5,
+        1.5
       );
+
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(nameFontSize);
+      pdf.setTextColor(30, 30, 30);
+
+      pdf.text(
+        item.nombre,
+        nameX + textPadding,
+        y
+      );
+
+      /*
+      * METADATOS: TONO Y TEMPO
+      */
+
+      let metadataCursorX = nameX + finalBoxWidth + 8;
+
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(10);
+      pdf.setTextColor(80, 80, 80);
+
+      if (item.tono) {
+        const tonoWidth = pdf.getTextWidth(item.tono) + 5;
+
+        if (metadataCursorX + tonoWidth <= itemRightLimit) {
+          pdf.text(item.tono, metadataCursorX, y);
+          metadataCursorX += tonoWidth;
+        }
+      }
+
+      if (item.tempo) {
+        const tempoText = `${item.tempo} BPM`;
+
+        if (
+          metadataCursorX + pdf.getTextWidth(tempoText) <=
+          itemRightLimit
+        ) {
+          pdf.text(tempoText, metadataCursorX, y);
+        }
+      }
+
+      /*
+      * NOTA MULTILÍNEA
+      */
+
+      if (noteLines.length > 0) {
+        pdf.setFont("helvetica", "normal");
+        pdf.setFontSize(9);
+        pdf.setTextColor(100, 100, 100);
+
+        pdf.text(
+          noteLines,
+          nameX,
+          y + rowHeight - 3,
+          { lineHeightFactor: 1.15 }
+        );
+      }
+
+      y += itemHeight;
+    });
+
 
       /*
        * PIE DE PÁGINA
