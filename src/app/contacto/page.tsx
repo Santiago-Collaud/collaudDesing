@@ -34,7 +34,7 @@ export default function Contacto() {
         // delay de 1 segundo antes de redirigir
         const timer = setTimeout(() => {
           router.push("/home");
-        }, 1000);
+        }, 5000);
 
         return () => clearTimeout(timer); // cleanup por las dudas
       }
@@ -168,6 +168,8 @@ export default function Contacto() {
             }`}
           >
             {toastType === "error" ? `⚠️ ${error}` : "✅ Mensaje enviado"}
+            <h1>Pronto nos comunicaremos con vos para resolver tu consulta.</h1>
+
           </motion.div>
         )}
       </AnimatePresence>
